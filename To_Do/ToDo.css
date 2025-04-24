@@ -1,0 +1,115 @@
+:root{
+  --svg-size: 15px;
+  --drag-dot-size: 3px;
+}
+
+main{
+  width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.header{
+  text-align: center;
+}
+
+ul{
+  list-style-type: none;
+}
+
+.ToDoList li{
+  display: flex;
+  justify-content:space-evenly;
+  align-items: center;
+  margin: auto;
+  height: 40px;
+  /* background-color: rgb(246 241 232); */
+  border-bottom: 1px solid black;
+  animation: popUp 300ms;
+}
+
+.drag{
+  display: grid;
+  width: 20px;
+  height: 40px;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
+  grid-template-columns: repeat(2, 5px)
+}
+.dot{
+  width: var(--drag-dot-size);
+  height: var(--drag-dot-size);
+  margin: 1px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+li input{
+  border: none;
+  outline: none;
+  height: 40px;
+  width: 90%;
+  padding: 0;
+  background-color: inherit;
+}
+
+li:hover, li:hover > input{
+  background-color: rgb(228, 226, 224);
+}
+
+input:focus{
+  background-color: inherit;
+}
+
+.add{
+  height: 15px;
+  width: 15px;
+  padding: 0;
+  background: none;
+  border: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  transform: rotate(45deg);
+}
+
+.add-svg{
+  height: inherit;
+  width: inherit;
+}
+
+.is-done{
+  width: 15px;
+  height: 15px;
+}
+
+.delete{
+  border: none;
+  width: 40px;
+  background: none;
+}
+.delete:hover .lid{
+  rotate: -15deg;
+  transform: translate(-4px, 0px);
+}
+.delete:hover svg{fill:red;}
+
+
+li[data-task-checked="1"] .task{
+  text-decoration: line-through;
+}
+li[data-task-checked="0"]  .task{
+  text-decoration: none;
+}
+
+
+@keyframes popUp {
+  from{
+    height: 20px;
+    width: 40px;
+  }
+  to{
+    height: 40px;
+    width: 100%;
+  }
+}
