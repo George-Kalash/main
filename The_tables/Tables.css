@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+body{
+    width: 100vw;
+    margin: 0;
+    background-color:  #fff;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+
+}
+
+#present{
+    margin-left: 5px;
+}
+
+.indicator{
+    display: inline-block;
+    border-radius: 3px;
+    width: 15px;
+    height: 15px;
+}
+
+#indicator_cold{
+    background-color: #0c9edd;
+}
+
+#indicator_half{
+    background-color: rgb(118 173 220);
+}
+
+#indicator_noice{
+    background-color: #144e83;
+}
+
+#indicator_milk{
+    border: 1px solid black;
+}
+
+#indicator_milk_small{
+    border: 1px solid black;
+    width: 10px;
+    height: 10px;
+}
+
+#indicator_mug{
+    width: 20px;
+    height: 22px;
+    background: url(./icomoon/SVG/mug.svg)  no-repeat;
+    background-size: 20px 20px;
+}
+
+#indicator_V8{
+    background-color: red;
+}
+
+#indicator_Cran{
+    background-color: rgb(247, 16, 181);
+}
+
+
+
+#attributes{
+    margin-top: 10px;
+    margin: auto;
+    text-decoration: underline ;
+    text-decoration-color: #dfdfde;
+    text-underline-offset: 5px;
+    text-align: left;
+    width: 300px;
+}
+
+.list_value{
+    display: flex;
+    align-items: center;
+    height: 20px;
+    border-bottom: 0;
+    border-radius: 5px;
+    margin: 10px;
+}
+.list_value > *{
+    display: inline-block;
+    margin-right:5px ;
+
+}
+
+strong{
+    margin-left: 5px;
+}
+
+#tables{
+    margin: 20px;
+    text-align: center;
+
+}
+
+.tbl_box{
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+}
+
+.table_number{
+    display: block;
+    margin-bottom: -10px;
+}
+
+.table{
+    text-align: center;
+    min-width: 200px;
+    min-height: 200px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    /* rotate: 45deg; */
+    /* align-items: center; */
+    display: grid;
+}
+
+.person{
+    text-align: left;
+    margin: 10px;
+    margin-top: 10px;
+    height: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;    
+    align-items: center;
+    margin-left: 0px;
+    text-decoration: underline;
+    text-decoration-color: #dfdfde;
+    text-underline-offset: 5px;
+}
+
+.person > *{
+    margin: 5px;
+}
+
+.grid{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    height: 100vh;
+}
+
+@media screen and (max-width: 600px) {
+    body{
+        width: 500px;
+    }
+}
