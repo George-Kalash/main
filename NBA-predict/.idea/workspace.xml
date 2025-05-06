@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ad60ed62-5f09-4a4d-987a-0d3ea1721535" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/adjust.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/fetch_newest_game.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/nba_pipeline.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/predict_matchup.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/prepare_elo_features.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/process_nba_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/play_off_box_scores_2010_2024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/data/play_off_box_scores_2010_2024.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/play_off_totals_2010_2024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/data/play_off_totals_2010_2024.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/regular_season_box_scores_2010_2024_part_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/data/regular_season_box_scores_2010_2024_part_1.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/regular_season_box_scores_2010_2024_part_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/data/regular_season_box_scores_2010_2024_part_2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/regular_season_box_scores_2010_2024_part_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/data/regular_season_box_scores_2010_2024_part_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/regular_season_totals_2010_2024.csv" beforeDir="false" afterPath="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/data/regular_season_totals_2010_2024.csv" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2wHk4tu4UOhSFUH2OZvcJ0M5zbS" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.adjust.executor": "Run",
+    "Python.fetch_newest_game.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.nba_pipeline.executor": "Run",
+    "Python.process_data.executor": "Run",
+    "Python.train_rf.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/georgei/Desktop/UWaterloo/Projects/NBA-predict",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/data" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.nba_pipeline">
+    <configuration name="adjust" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NBA-predict" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/adjust.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="fetch_newest_game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NBA-predict" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/fetch_newest_game.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="NBA-predict" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="nba_pipeline" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NBA-predict" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/nba_pipeline.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="process_nba_data" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NBA-predict" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024/process_nba_data.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train_rf" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NBA-predict" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_rf.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.nba_pipeline" />
+        <item itemvalue="Python.fetch_newest_game" />
+        <item itemvalue="Python.adjust" />
+        <item itemvalue="Python.process_nba_data" />
+        <item itemvalue="Python.train_rf" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
+        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad60ed62-5f09-4a4d-987a-0d3ea1721535" name="Changes" comment="" />
+      <created>1745705698842</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1745705698842</updated>
+      <workItem from="1745705699918" duration="23907000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/NBA_predict$process_data.coverage" NAME="process_data Coverage Results" MODIFIED="1745709468556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+    <SUITE FILE_PATH="coverage/NBA_predict$train_rf.coverage" NAME="train_rf Coverage Results" MODIFIED="1745708469811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/NBA_predict$fetch_newest_game.coverage" NAME="fetch_newest_game Coverage Results" MODIFIED="1745712590180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+    <SUITE FILE_PATH="coverage/NBA_predict$adjust.coverage" NAME="adjust Coverage Results" MODIFIED="1745710154146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+    <SUITE FILE_PATH="coverage/NBA_predict$nba_pipeline.coverage" NAME="nba_pipeline Coverage Results" MODIFIED="1745716033608" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NBA_2010-2024_datase/NBA-Data-2010-2024" />
+    <SUITE FILE_PATH="coverage/NBA_predict$main.coverage" NAME="main Coverage Results" MODIFIED="1745708101149" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
