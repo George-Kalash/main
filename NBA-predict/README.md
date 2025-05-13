@@ -8,4 +8,4 @@ In order to use the program you need to
 2) run the main.py with the IDs of the opposing teams, those can be found in the data sheets.
 "
 
-Overall Accuravy: ~70%
+Overall Accuracy: ~70%
