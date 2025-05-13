@@ -4,6 +4,6 @@ The project utilizes the power of SkLearn, amongst other Python libraries, to ac
 
 In order to use the program you need to 
 "
-1) train the model;
-2) run it with the IDs of the opposing teams, those can be found in the data sheets.
+1) train the model
+2) run the main.py with the IDs of the opposing teams, those can be found in the data sheets.
 "
