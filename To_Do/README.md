@@ -1,1 +1,1 @@
-# A simple To-do app. I still use it
+# A simple To-do app. I use it on a daily basis
