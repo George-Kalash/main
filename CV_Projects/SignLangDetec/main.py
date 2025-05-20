@@ -1,0 +1,1 @@
+The thing is, this one is much more useful for me, and it's light but it is much smaller than the keyboard that I like but I can type with a good enough speed in order to write code, however, 
