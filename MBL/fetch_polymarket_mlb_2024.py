@@ -24,7 +24,7 @@ def events_2024():
         "start_date_min": SEASON_START.to_iso8601_string(),
         "start_date_max": SEASON_END.to_iso8601_string(),
         "limit": 1000,
-        "archived": True       # include resolved markets
+        "archived": True       # includes resolved markets
     }
     return requests.get(url, params=params, timeout=30).json()
 
