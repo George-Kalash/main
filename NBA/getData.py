@@ -5,8 +5,6 @@ from nba_api.stats.endpoints import TeamGameLogs
 team_meta = teams.get_teams()
 teams_df = pd.DataFrame(team_meta)
 
-# print(teams_df)
-
 seasons = [f"{yr}-{str(yr+1)[2:]}"           # 1980-81, 1981-82, …
            for yr in range(1980, 2025)]      # stop at 2024-25
 
