@@ -23,5 +23,3 @@ for season in tqdm.tqdm(seasons):
     
 games_80_25 = pd.concat(all_frames, ignore_index=True)
 games_80_25.to_csv("nba_games_1980_2025.csv", index=False)
-# or Parquet:
-games_80_25.to_parquet("nba_games_1980_2025.parquet")
