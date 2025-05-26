@@ -2,7 +2,6 @@
 
 This is a collection of every one of my projects that I have worked on and/or completed so far.
 
-For the hiring people.
   ## Current completed projects (displayed in order of importance):
     * NBA-predict – Machine learning project in python; utilized sklearn, pandas, joblib, and numpy
     * Watopoly – Monopoly-like C++ game, final project for CS246; Received a grade of 96
