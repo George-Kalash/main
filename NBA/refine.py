@@ -42,7 +42,13 @@ def refine_data(
     extracted["HOME_AWAY"] = extracted["HOME_AWAY"].str.replace(r"\.", "", regex=True)
 
     # ── 4. Join and, *now* that we’re done, optionally drop MATCHUP ─────────
-    df = df.join(extracted)
+    df.insert(3, "HOME_AWAY",extracted["HOME_AWAY"])
+    df.insert(4, "OPPONENT_ABBREVIATION",extracted["OPPONENT_ABBREVIATION"])
+    df = df.rename(columns={"WL": "OUTCOME"})
+
+    repleceCol = df.pop("OUTCOME")  # move OUTCOME to the end
+    df.insert(len(df.columns), "OUTCOME", repleceCol)
+    
 
     # comment this line out if you still want MATCHUP around
     df = df.drop(columns=[matchup_col])

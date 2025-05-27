@@ -18,4 +18,7 @@ for season in tqdm(seasons):
     time.sleep(0.7)
 
 clean_df = refine_data(frames)       # list OK now
-clean_df.to_csv("nba_games_1996_2025.csv", index=False)
+
+df_sorted = clean_df.sort_values("GAME_DATE", ascending=False)
+
+df_sorted.to_csv("nba_games_1996_2025.csv", index=False)
