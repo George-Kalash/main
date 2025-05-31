@@ -1,4 +1,4 @@
-# George's repository
+# Repository Description
 
 This is a collection of every one of my projects that I have worked on and/or completed so far.
 
