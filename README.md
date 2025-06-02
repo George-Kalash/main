@@ -1,6 +1,7 @@
 # Repository Description
 
-This is a collection of every one of my projects that I have worked on and/or completed so far.
+
+This is a collection of my side projects I have worked on and/or completed since 2024.
 
   ## Current completed projects (displayed in order of importance):
   * **NBA-predict** – Machine learning project in python; utilized sklearn, pandas, joblib, and numpy.
