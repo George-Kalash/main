@@ -4,8 +4,8 @@
 This is a collection of my side projects I have worked on and/or completed since 2024.
 
   ## Current completed projects (displayed in order of importance):
-  * **NBA-predict** – Machine learning project in python built on the basis of the random forest algorithm;
-     utilized sklearn, pandas, joblib, and numpy.
+  * **NBA-predict** – Machine learning project in python built on the basis of the random forest algorithm.
+     Utilized: sklearn, pandas, joblib, and numpy.
   * **Color detection** – An OpenCV focused python project which is built to detect different colors pre-specified.
   * **Watopoly** – Monopoly-like C++ game, final project for CS246; Received a grade of 96.
   * **To_Do** – A simple to-do app.
