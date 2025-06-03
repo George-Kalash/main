@@ -1,9 +1,9 @@
 import pandas
 
 def win_probability(rating1, rating2):
-    return 1 / (1 + (10 ** ((rating1 - rating2) / 400)))
+    return 1 / (1 + (10 ** ((rating1 - rating2) / 350))) # <- fix the overflow issue
 
-def elo_rating(Ra=1000, Rb=1000, k=40, outcome=1):
+def elo_rating(Ra=1200, Rb=1200, k=30, outcome=1):
     Pa = win_probability(Ra, Rb)
     Pb = win_probability(Rb, Ra)
     
@@ -23,22 +23,32 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
     df = pandas.read_csv(csv_file)
     elo_ratings = {}
     games = []  # Use a list to store game dictionaries
+    current_season = None  # e.g., use year extracted from row['GAME_DATE']
     
     for index, row in df.iterrows():
+      season = row['GAME_DATE'].split('-')[0]  # example: use year from date
+      if current_season is None:
+        current_season = season
+      elif season != current_season:
+        # Optional: reset ratings or regress toward baseline for a new season
+        for team in elo_ratings:
+            elo_ratings[team] = 1200  # or apply a regression factor
+        current_season = season
+      
       home_team = row['TEAM_ABBREVIATION'] if row['HOME_AWAY'] == 'vs' else row['OPPONENT_ABBREVIATION']
       away_team = row['OPPONENT_ABBREVIATION'] if row['HOME_AWAY'] == 'vs' else row['TEAM_ABBREVIATION']
       home_score = row['PTS'] if row['HOME_AWAY'] == 'vs' else row['PTS'] - row['PLUS_MINUS']
       away_score = row['PTS'] - row['PLUS_MINUS'] if row['HOME_AWAY'] == 'vs' else row['PTS']
       # Initialize ratings if teams are not already in the dictionary
       if home_team not in elo_ratings:
-        elo_ratings[home_team] = 1400
+        elo_ratings[home_team] = 1200
       if away_team not in elo_ratings:
-        elo_ratings[away_team] = 1400
+        elo_ratings[away_team] = 1200
       # Determine outcome: 1 for home win, 0 for away win
       outcome = 1 if row['OUTCOME'] == 'W' else 0
       
       # Update Elo ratings based on the game result
-      elo1, elo2 = elo_rating(elo_ratings[home_team], elo_ratings[away_team], outcome)
+      elo1, elo2 = elo_rating(elo_ratings[home_team], elo_ratings[away_team], 30, outcome)
       elo_ratings[home_team] = elo1
       elo_ratings[away_team] = elo2
 
