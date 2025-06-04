@@ -26,6 +26,8 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
     current_season = None  # e.g., use year extracted from row['GAME_DATE']
     
     for index, row in df.iterrows():
+      if row['HOME_AWAY'] != "vs":
+        continue
       season = row['GAME_DATE'].split('-')[0]  # example: use year from date
       if current_season is None:
         current_season = season
@@ -72,7 +74,8 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
     games_df = pandas.DataFrame(games)  # Convert list of dictionaries to DataFrame
     games_df.to_csv("elo_games.csv", index=False)
     print("Elo ratings saved to elo_ratings.csv")
-        
+
+
 
 
 analyze_elo()
