@@ -1,14 +1,29 @@
 import pandas
 
 def win_probability(rating1, rating2):
-    return 1 / (1 + (10 ** ((rating1 - rating2) / 350))) # <- fix the overflow issue
+    return 1 / (1 + (10 ** ((rating1 - rating2) / 500))) # <- fix the overflow issue
 
-def elo_rating(Ra=1200, Rb=1200, k=30, outcome=1):
+def  dynamic_k_factor(games_played, K0, K_min):
+  """
+  Calculates the dynamic K-factor based on the ratings of two players/teams.
+  Args:
+      games_played (int): Number of games played by the player/team.
+      K0 (float): Initial K-factor.
+      K_min (float): Minimum K-factor.
+  """
+  new_K = max(K_min, K0/ ((games_played + 1) ** 0.5))
+  return new_K
+  
+  
+def elo_rating(Ra=1400, Rb=1400, k=30, outcome=1):
     Pa = win_probability(Ra, Rb)
     Pb = win_probability(Rb, Ra)
     
     Ra += k * (outcome - Pa)
     Rb += k * ((1 - outcome) - Pb)
+    #  Hard floor for ELO
+    # Ra = max(Ra, -200)
+    # Rb = max(Rb, -200)
 
     # print(f"Updated Ratings: Ra = {Ra}, Rb = {Rb}")
     return Ra, Rb
@@ -19,7 +34,14 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
     Args:
         csv_file (str, optional): _description_. Defaults to "nba_games_1996_2025.csv".
     """
+    
+    Alpha = 0.78
+    K_min = 5
+    K0 = 30  # Initial K-factor
+    Baseline = 1400  # Baseline Elo rating for new teams    
 
+    gamesPlayed = {}
+    
     df = pandas.read_csv(csv_file)
     elo_ratings = {}
     games = []  # Use a list to store game dictionaries
@@ -28,48 +50,66 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
     for index, row in df.iterrows():
       if row['HOME_AWAY'] != "vs":
         continue
-      season = row['GAME_DATE'].split('-')[0]  # example: use year from date
+      season = row['SEASON_YEAR']  # example: use year from date
       if current_season is None:
         current_season = season
       elif season != current_season:
-        # Optional: reset ratings or regress toward baseline for a new season
+        # Reset ratings or regress toward Baseline for a new season
         for team in elo_ratings:
-            elo_ratings[team] = 1200  # or apply a regression factor
+            elo_ratings[team] = elo_ratings[team] * Alpha   # or apply a regression factor
         current_season = season
       
-      home_team = row['TEAM_ABBREVIATION'] if row['HOME_AWAY'] == 'vs' else row['OPPONENT_ABBREVIATION']
-      away_team = row['OPPONENT_ABBREVIATION'] if row['HOME_AWAY'] == 'vs' else row['TEAM_ABBREVIATION']
-      home_score = row['PTS'] if row['HOME_AWAY'] == 'vs' else row['PTS'] - row['PLUS_MINUS']
-      away_score = row['PTS'] - row['PLUS_MINUS'] if row['HOME_AWAY'] == 'vs' else row['PTS']
-      # Initialize ratings if teams are not already in the dictionary
-      if home_team not in elo_ratings:
-        elo_ratings[home_team] = 1200
-      if away_team not in elo_ratings:
-        elo_ratings[away_team] = 1200
-      # Determine outcome: 1 for home win, 0 for away win
+      home_team = row['TEAM_ABBREVIATION']
+      away_team = row['OPPONENT_ABBREVIATION']
+      home_score = row['PTS']
+      away_score = row['PTS'] - row['PLUS_MINUS'] 
       outcome = 1 if row['OUTCOME'] == 'W' else 0
       
+      # Initialize ratings if teams are not already in the dictionary
+      if home_team not in elo_ratings:
+        elo_ratings[home_team] = Baseline
+        gamesPlayed[home_team] = 0
+      if away_team not in elo_ratings:
+        elo_ratings[away_team] = Baseline
+        gamesPlayed[away_team] = 0
+      
       # Update Elo ratings based on the game result
-      elo1, elo2 = elo_rating(elo_ratings[home_team], elo_ratings[away_team], 30, outcome)
-      elo_ratings[home_team] = elo1
-      elo_ratings[away_team] = elo2
+      K_home = dynamic_k_factor(gamesPlayed[home_team], K0, K_min)
+      K_away = dynamic_k_factor(gamesPlayed[away_team], K0, K_min)
+      
+      k_used = min(K_home, K_away)  # Use the smaller K-factor for both teams
+
+      old_home_elo = elo_ratings[home_team]
+      old_away_elo = elo_ratings[away_team]
+      new_home_elo, new_away_elo = elo_rating(old_home_elo, old_away_elo, k_used, outcome)
+      
+      elo_ratings[home_team] = new_home_elo
+      elo_ratings[away_team] = new_away_elo
+      
+      gamesPlayed[home_team] += 1
+      gamesPlayed[away_team] += 1
+
 
       # Append game data as a dictionary
       games.append({
+        'SEASON': current_season,
         'DATE': row['GAME_DATE'].split("T")[0],  # Extract date from datetime
-        'HT': home_team,
-        '@': row['HOME_AWAY'],
-        'AT': away_team,
-        'HT_PTS': home_score,
-        'AT_PTS': away_score,
-        'OUTCOME': outcome,
-        'TEAM1_ELO' : round(elo1, 2),
-        'TEAM2_ELO' : round(elo2, 2)
+        'Home_Team': home_team,
+        'Away_Team': away_team,
+        'HT_PTS': home_score, # HT -- home team points
+        'AT_PTS': away_score, # AT -- away team points
+        'OUTCOME': outcome, # 1 for home win, 0 for away win
+        'HT_ELO' : round(new_home_elo, 2),
+        'AT_ELO' : round(new_away_elo, 2),
+        'K_HOME_USED': round(K_home, 2),
+        'K_AWAY_USED': round(K_away, 2),
       })
 
-    elo_df = pandas.DataFrame(list(elo_ratings.items()), columns=['Team', 'Elo_Rating'])
+    elo_df = pandas.DataFrame(list(elo_ratings.items()), columns=['Team', 'Internal_Elo'])
+    # Shift up by +1000 so no published Elo ever goes below ~800
+    elo_df['Elo_Rating'] = elo_df['Internal_Elo'] + 1000
     elo_df = elo_df.sort_values(by='Elo_Rating', ascending=False).reset_index(drop=True)
-    elo_df.to_csv("elo_ratings.csv", index=False)
+    elo_df[['Team', 'Elo_Rating']].to_csv("elo_ratings.csv", index=False)
     
     games_df = pandas.DataFrame(games)  # Convert list of dictionaries to DataFrame
     games_df.to_csv("elo_games.csv", index=False)
@@ -79,62 +119,3 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
 
 
 analyze_elo()
-
-
-
-
-
-
-
-# Initialize EloGame with default parameters
-# game = EloGame(re=1400, rd=350, k=20) 
-                # re: initial rating for each player/team
-                # rd: initial rating deviation (uncertainty in the rating)
-                # k: weight of the game in the rating update 
-
-# def calculate_elo(csv_file="nba_games_1996_2025.csv"):
-#   """
-#   Calculate Elo ratings for NBA teams based on game results.
-#   Returns:
-#       pandas.DataFrame: DataFrame containing team names and their Elo ratings.
-#   """
-#   #Load the dataset
-#   df = pandas.read_csv(csv_file)
-#   # Initialize a dictionary to store Elo ratings
-#   elo_ratings = {}
-  
-#   # Iterate through each row in the DataFrame
-#   for index, row in df.iterrows():
-#       # Determine home team based on HOME_AWAY
-#       home_team = row['TEAM_ABBREVIATION'] if row['HOME_AWAY'] == 'vs' else row['OPPONENT_ABBREVIATION'] 
-#       away_team = row['OPPONENT_ABBREVIATION'] if row['HOME_AWAY'] == 'vs' else row['TEAM_ABBREVIATION']
-#       home_score = row['PTS'] if row['HOME_AWAY'] == 'vs' else row['OPPONENT_PTS']
-#       away_score = row['OPPONENT_PTS'] if row['HOME_AWAY'] == 'vs' else row['PTS']
-#       # Initialize ratings if teams are not already in the dictionary
-#       if home_team not in elo_ratings:
-#           elo_ratings[home_team] = game.re
-#           if away_team not in elo_ratings:
-#               elo_ratings[away_team] = game.re
-#       # Update Elo ratings based on the game result        
-#       game.update_elo(home_team, away_team, home_score, away_score)
-#   # Create a DataFrame from the Elo ratings dictionary
-#   elo_df = pandas.DataFrame(list(elo_ratings.items()), columns=['Team', 'Elo_Rating']) 
-#   # Sort the DataFrame by Elo rating in descending order
-#   elo_df = elo_df.sort_values(by='Elo_Rating', accending=False).reset_index(drop=True)
-#   return elo_df
-
-# def save_elo_ratings():
-#     """
-#     Saves the calculated Elo ratings to a CSV file.
-#     """
-#     elo_df = calculate_elo()
-#     elo_df.to_csv("elo_ratings.csv", index=False)
-#     print("Elo ratings saved to elo_ratings.csv")
-    
-# if __name__ == "__main__":
-#     save_elo_ratings()
-#     print("Elo ratings calculation completed.")
-
-# save_elo_ratings()
-
-

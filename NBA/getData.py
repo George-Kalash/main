@@ -3,7 +3,7 @@ from tqdm import tqdm
 import pandas as pd
 from nba_api.stats.endpoints import TeamGameLogs
 from refine import refine_data
-from ELOCalculation import calculate_elo, save_elo_ratings
+# from ELOCalculation import calculate_elo, save_elo_ratings
 
 seasons = [f"{yr}-{str(yr+1)[2:]}" for yr in range(1996, 2025)]
 
@@ -24,5 +24,5 @@ df_sorted = clean_df.sort_values("GAME_DATE", ascending=False)
 
 df_sorted.to_csv("nba_games_1996_2025.csv", index=False)
 
-save_elo_ratings()  # calculate and save Elo ratings
+# save_elo_ratings()  # calculate and save Elo ratings
 print("NBA data collection and ELO ratings calculation completed.")
