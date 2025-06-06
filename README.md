@@ -11,7 +11,7 @@ This is a collection of my side projects I have worked on and/or completed since
   * **The_tables** – one of my first projects where I used Gapi for database.
 
   ## Projects Currently in development
-  * **NBA** – an improved version of the NBA-predict. Goal: acheive an accuracy of over 85%.
+  * **NBA** – an improved version of the NBA-predict. Goal: acheive an accuracy of over 84%.
   * **Internation Tennis** – Machine learning project focucing on predicting tennis matches. Goal: acheive an accuracy of over 85%.
   * **UI landing** – Will be used to show every project in an interactive format.
     
