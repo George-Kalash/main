@@ -1,7 +1,8 @@
-import pandas
+import pandas as pd 
+
 
 def win_probability(rating1, rating2):
-    return 1 / (1 + (10 ** ((rating1 - rating2) / 500))) # <- fix the overflow issue
+    return 1 / (1 + (10 ** ((rating1 - rating2) / 500))) 
 
 def  dynamic_k_factor(games_played, K0, K_min):
   """
@@ -42,7 +43,7 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
 
     gamesPlayed = {}
     
-    df = pandas.read_csv(csv_file)
+    df = pd.read_csv(csv_file)
     elo_ratings = {}
     games = []  # Use a list to store game dictionaries
     current_season = None  # e.g., use year extracted from row['GAME_DATE']
@@ -105,17 +106,14 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
         'K_AWAY_USED': round(K_away, 2),
       })
 
-    elo_df = pandas.DataFrame(list(elo_ratings.items()), columns=['Team', 'Internal_Elo'])
+    elo_df = pd.DataFrame(list(elo_ratings.items()), columns=['Team', 'Internal_Elo'])
     # Shift up by +1000 so no published Elo ever goes below ~800
     elo_df['Elo_Rating'] = elo_df['Internal_Elo'] + 1000
-    elo_df = elo_df.sort_values(by='Elo_Rating', ascending=False).reset_index(drop=True)
+    elo_df = elo_df.sort_values(by='Team', ascending=True).reset_index(drop=True)
     elo_df[['Team', 'Elo_Rating']].to_csv("elo_ratings.csv", index=False)
     
-    games_df = pandas.DataFrame(games)  # Convert list of dictionaries to DataFrame
+    games_df = pd.DataFrame(games)  # Convert list of dictionaries to DataFrame
     games_df.to_csv("elo_games.csv", index=False)
     print("Elo ratings saved to elo_ratings.csv")
-
-
-
 
 analyze_elo()

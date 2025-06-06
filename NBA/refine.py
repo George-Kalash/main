@@ -40,6 +40,7 @@ def refine_data(
 
     extracted = df[matchup_col].str.extract(pattern, expand=True)
     extracted["HOME_AWAY"] = extracted["HOME_AWAY"].str.replace(r"\.", "", regex=True)
+    
 
     # ── 4. Join and, *now* that we’re done, optionally drop MATCHUP ─────────
     df.insert(3, "HOME_AWAY",extracted["HOME_AWAY"])
@@ -52,5 +53,56 @@ def refine_data(
 
     # comment this line out if you still want MATCHUP around
     df = df.drop(columns=[matchup_col])
+    mask = df['HOME_AWAY'].str.contains('@', na=False)
+    df = df[~mask].reset_index(drop=True)
 
     return df
+
+def get_win_loss_ratio(cutoff="1996-1997"):
+    """
+    Args:
+        cutoff (str): cutoff season (must be < lastes season)
+    Returns:
+        DataFrame: Wins ara losses of the team up to a given season, 1996-1997 by default.
+    """
+    file = pd.read_csv("nba_games_1996_2025.csv")
+    additional_stats_df = pd.read_csv("elo_ratings.csv")
+    
+    team_record = {}
+    
+    for _, row in file.iterrows():
+        
+        
+        if row['SEASON_YEAR'] == cutoff:
+            break
+        home_team = row['TEAM_ABBREVIATION']
+        away_team = row['OPPONENT_ABBREVIATION']
+        outcome = row['OUTCOME']
+        
+        if home_team not in team_record:
+            team_record[home_team] = {"wins" : 0, "losses": 0}
+        if away_team not in team_record:
+            team_record[away_team] = {'wins': 0, 'losses': 0}
+
+        if outcome == 'W':
+            team_record[home_team]['wins'] += 1
+            team_record[away_team]['wins'] += 1
+            
+        else:
+            team_record[home_team]['losses'] += 1
+            team_record[away_team]['losses'] += 1
+        
+    df = pd.DataFrame.from_dict(team_record, orient='index')
+    
+    
+    df = df.reset_index().rename(columns={'index': 'Team'})
+    df['W/L'] = df['wins'] / df['losses']
+    df = df[['Team', 'wins', 'losses', 'W/L']]
+    df = df.sort_values(by='Team', ascending=True)
+    
+    df_joint = pd.merge(additional_stats_df, df, how="inner", on='Team')
+    
+    df_joint.to_csv("win-loss.csv", index=False)
+    return df_joint
+    
+get_win_loss_ratio()
