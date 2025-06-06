@@ -58,14 +58,14 @@ def refine_data(
 
     return df
 
-def get_win_loss_ratio(cutoff="1996-1997"):
+def get_win_loss_ratio(cutoff="2002-03"):
     """
     Args:
         cutoff (str): cutoff season (must be < lastes season)
     Returns:
         DataFrame: Wins ara losses of the team up to a given season, 1996-1997 by default.
     """
-    file = pd.read_csv("nba_games_1996_2025.csv")
+    file = pd.read_csv("fullSet.csv")
     additional_stats_df = pd.read_csv("elo_ratings.csv")
     
     team_record = {}
@@ -102,7 +102,8 @@ def get_win_loss_ratio(cutoff="1996-1997"):
     
     df_joint = pd.merge(additional_stats_df, df, how="inner", on='Team')
     
-    df_joint.to_csv("win-loss.csv", index=False)
+    df_joint.to_csv("win-loss-total_elo.csv", index=False)
+    print("Finished W/L parcing")
     return df_joint
     
-get_win_loss_ratio()
+# get_win_loss_ratio()

@@ -46,6 +46,7 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
     df = pd.read_csv(csv_file)
     elo_ratings = {}
     games = []  # Use a list to store game dictionaries
+    elo_records = []
     current_season = None  # e.g., use year extracted from row['GAME_DATE']
     
     for index, row in df.iterrows():
@@ -105,6 +106,11 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
         'K_HOME_USED': round(K_home, 2),
         'K_AWAY_USED': round(K_away, 2),
       })
+      
+      elo_records.append({
+        'TEAM_ELO' : round(new_home_elo, 2),
+        'OPPONENT_ELO' : round(new_away_elo, 2)
+      })
 
     elo_df = pd.DataFrame(list(elo_ratings.items()), columns=['Team', 'Internal_Elo'])
     # Shift up by +1000 so no published Elo ever goes below ~800
@@ -114,6 +120,12 @@ def analyze_elo(csv_file="nba_games_1996_2025.csv"):
     
     games_df = pd.DataFrame(games)  # Convert list of dictionaries to DataFrame
     games_df.to_csv("elo_games.csv", index=False)
+
+    elo_reconds_df = pd.DataFrame(elo_records) # convert elo data into a DataFrame
+    df_merged = pd.concat([df, elo_reconds_df], axis=1)
+    
+    df_merged.to_csv("fullSet.csv", index=False)
+    
     print("Elo ratings saved to elo_ratings.csv")
 
-analyze_elo()
+# analyze_elo()
