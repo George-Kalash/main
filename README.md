@@ -15,3 +15,8 @@ This is a collection of my side projects I have worked on and/or completed since
   * **Internation Tennis** – Machine learning project focucing on predicting tennis matches. Goal: acheive an accuracy of over 85%.
   * **UI landing** – Will be used to show every project in an interactive format.
     
+## Weekly Adgenda
+  - [x] Finish work on ELO 
+  - [ ] Start the work on the ML part of the NBA project
+  - [ ] Begin work on the web resume
+  - [x] Commit to a 7-day GitHub streak 
