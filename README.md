@@ -20,3 +20,4 @@ This is a collection of my side projects I have worked on and/or completed since
   - [ ] Start the work on the ML part of the NBA project
   - [ ] Begin work on the web resume
   - [x] Commit to a 7-day GitHub streak 
+  - [x] Figure out why Git didn't count some of my commits as separate
