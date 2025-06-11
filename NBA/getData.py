@@ -28,7 +28,7 @@ def get_data():
 
     df_sorted = clean_df.sort_values("GAME_DATE", ascending=False)
 
-    df_sorted.to_csv("nba_games_1996_2025.csv", index=False)
+    df_sorted.to_csv("temporary_set.csv", index=False)
 
     # save_elo_ratings()  # calculate and save Elo ratings
     print("NBA data collection and ELO ratings calculation completed.")

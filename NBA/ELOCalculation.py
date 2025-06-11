@@ -29,14 +29,14 @@ def elo_rating(Ra=1400, Rb=1400, k=30, outcome=1):
     # print(f"Updated Ratings: Ra = {Ra}, Rb = {Rb}")
     return Ra, Rb
   
-def analyze_elo(csv_file="nba_games_1996_2025.csv"):
+def analyze_elo(csv_file="temporary_set.csv"):
     """
     Analyze Elo ratings for NBA teams based on game resuts.
     Args:
-        csv_file (str, optional): _description_. Defaults to "nba_games_1996_2025.csv".
+        csv_file (str, optional): _description_. Defaults to "temporary_set.csv".
     """
     
-    Alpha = 0.78
+    Alpha = 0.65
     K_min = 5
     K0 = 30  # Initial K-factor
     Baseline = 1400  # Baseline Elo rating for new teams    
