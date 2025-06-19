@@ -18,3 +18,5 @@ TARGET = 'OUTCOME'
 df = pd.read_csv("fullset.csv",  parse_dates=["GAME_DATE"])
 
 # write the rest
+# classier
+clf = RandomForestClassifier(random_state=0)
