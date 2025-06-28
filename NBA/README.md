@@ -2,7 +2,7 @@
 
 ## This model utilizes heavily pandas and the sklearn libraries for python.
 
-As of June 18th 2025 the top accuracy recodred was 82% 
+As of June 18th 2025 the top accuracy recodred was 82%, ROC > 0.9
 The dataset contains around 28,000 games, all from the home team's prespective.
 
 ## Potention improvement considerations: 
