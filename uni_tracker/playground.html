@@ -8,17 +8,14 @@
 </head>
 <body>
 <template>
-  <div class="card" style="color: white;"> 
+  <div class="default-box" style="color: white;"> 
     <slot></slot>
-    <div class="img">
-      <img src="https://help.apple.com/assets/679ACA21EB15411D2F04AF52/679ACA228BFAEA9BFA09B3F3/en_US/b27be11281d58d9597fabdfcc67a3060.png" alt="apple photos icon" height="100px" width="100px">
-    </div>
+    
   </div>
   <svg>
     <filter id="turbulence">
-      <feTurbulence type="turbulence" baseFrequency="0.05 0.05" numOctaves="1" result="NOISE"></feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="NOISE" scale="50">
-      </feDisplacementMap>
+      <feTurbulence type="turbulence" baseFrequency="0.005" numOctaves="2" result="turbulence"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector=""/>
     </filter>
    </svg>
   <svg style="display: none;">
@@ -34,56 +31,6 @@
     </filter>
   </svg>
 </template>
-<!-- <template>
-  <main>
-    <AppGlassmorphism></AppGlassmorphism>
-    <AppCard>
-
-    </AppCard>
-  </main>
-</template> -->
-
-  <!-- <div class="wrapper">
-    <div class="innerbox"></div>
-  </div> -->
-  <script>
-    // after your showContent() call
-    document.addEventListener('DOMContentLoaded', () => {
-      const card = document.querySelector('.card');
-      let isDragging = false;
-      let startX, startY, origX, origY;
-  
-      card.style.cursor = 'grab';
-      card.style.userSelect = 'none';
-  
-      card.addEventListener('mousedown', e => {
-        isDragging = true;
-        card.style.cursor = 'grabbing';
-        // record where the pointer started...
-        startX = e.clientX;
-        startY = e.clientY;
-        // ...and where the card was
-        origX = card.offsetLeft;
-        origY = card.offsetTop;
-        e.preventDefault();
-      });
-  
-      document.addEventListener('mousemove', e => {
-        if (!isDragging) return;
-        // calculate new position
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        card.style.left = origX + dx + 'px';
-        card.style.top  = origY + dy + 'px';
-      });
-  
-      document.addEventListener('mouseup', () => {
-        if (!isDragging) return;
-        isDragging = false;
-        card.style.cursor = 'grab';
-      });
-    });
-  </script>
   
   <script>
     function showContent() {
@@ -92,7 +39,57 @@
       document.body.appendChild(clon);
     }
     showContent()
+    function addImg(){
+      const box = document.querySelector('.default-box');
 
+      // Create an image element
+      const img = document.createElement('img');
+      img.src = "./b27be11281d58d9597fabdfcc67a3060.png";
+      img.alt = "Descriptive text";
+      img.style.width = "100px"; // Optional styling
+      img.style.height = "auto";
+      
+      // Append image to the box
+      box.appendChild(img);
+    }
+    addImg()
+    function setupDragging() {
+      const card = document.querySelector('.default-box');
+      if (!card) return;
+    
+      let isDragging = false;
+      let startX, startY, origX, origY;
+    
+      card.style.cursor = 'grab';
+      card.style.userSelect = 'none';
+      card.style.position = 'absolute';
+    
+      card.addEventListener('mousedown', e => {
+        isDragging = true;
+        card.style.cursor = 'grabbing';
+        startX = e.clientX;
+        startY = e.clientY;
+        origX = card.offsetLeft;
+        origY = card.offsetTop;
+        e.preventDefault();
+      });
+    
+      document.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        card.style.left = origX + dx + 'px';
+        card.style.top  = origY + dy + 'px';
+      });
+    
+      document.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        card.style.cursor = 'grab';
+      });
+    }
+    addImg()
+    setupDragging();
     </script>
 </body>
 </html>

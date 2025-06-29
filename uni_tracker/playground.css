@@ -1,6 +1,6 @@
 /* Base background */
 body {
-  background-image: url("https://images.splitshire.com/full/The-Colorful-Streets-of-Sofia,-Bulgaria_khjVa.png");
+  background-image: url("./bg_waves_black.png");
   background-repeat: no-repeat;
   background-size: contain;
   /* position: absolute; */
@@ -34,9 +34,9 @@ body {
 }
 
 
-.card{
+.default-box{
   position: fixed;
-  top: 10%;
+  top: 40%;
   left: calc(50% - 150px);
   width: fit-content;
   height: fit-content;
@@ -50,10 +50,19 @@ body {
   transition: opacity 0.26s case-out;
   border-radius: 28px;
   /* filter: drop-shadow(-8px -10px 46px #00005f); */
-  backdrop-filter: brightness(1.1)
+  backdrop-filter: brightness(1.05)
     /* blur(2px) */
     url(#displacementFilter);
 }
-.img{
+
+
+
+.content{
   margin: 10px;
+  width: 100px;
+  height: 100px;
+}
+
+img{
+
 }
