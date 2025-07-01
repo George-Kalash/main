@@ -35,6 +35,7 @@ body {
 
 
 .default-box{
+  box-shadow: 0.5px 0.5px 3px inset;
   position: fixed;
   top: 40%;
   left: calc(50% - 150px);
@@ -47,17 +48,17 @@ body {
   padding: 0.5rem;
   overflow: hidden;
   border-radius: inherit;
+  border: 2px solid rgba(215, 213, 213, 0.25);
   transition: opacity 0.26s case-out;
   border-radius: 28px;
   /* filter: drop-shadow(-8px -10px 46px #00005f); */
-  backdrop-filter: brightness(1.1)
-    /* blur(2px) */
-    url(#displacementFilter);
-    background-color: rgba(224, 224, 224, 0.353);
+  backdrop-filter: brightness(1.1) 
+  /* blur(2px) */ /* <-- blur can be invoked if the background id solid in color with little to no variations */
+  url(#displacementFilter);
+  background-color: rgba(215, 213, 213, 0.25);
+
+
 }
-
-
-
 .content{
   margin: 10px;
   width: 100px;
