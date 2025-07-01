@@ -48,13 +48,13 @@ body {
   padding: 0.5rem;
   overflow: hidden;
   border-radius: inherit;
-  border: 2px solid rgba(215, 213, 213, 0.25);
+  border: 2px solid rgba(215, 213, 213, 0.21);
   transition: opacity 0.26s case-out;
   border-radius: 28px;
   /* filter: drop-shadow(-8px -10px 46px #00005f); */
   backdrop-filter: brightness(1.1) 
   /* blur(2px) */ /* <-- blur can be invoked if the background id solid in color with little to no variations */
-  url(#displacementFilter);
+  url(#turbulence);
   background-color: rgba(215, 213, 213, 0.25);
 
 
