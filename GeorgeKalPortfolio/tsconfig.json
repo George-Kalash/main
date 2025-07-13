@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": ["src"]
+}
+
