@@ -4,6 +4,12 @@ body{
   cursor: none;
 }
 
+
+
+nav {
+  margin: 10px;
+}
+
 @keyframes fade-in-out {
   0% { opacity: 0; }
   10% { opacity: 1; }
