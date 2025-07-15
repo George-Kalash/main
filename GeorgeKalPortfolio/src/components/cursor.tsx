@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, MouseEvent, MouseEventHandler } from 'react';
 
 export default function Cursor() {
   const ref = useRef<HTMLDivElement>(null);
@@ -17,8 +17,31 @@ export default function Cursor() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(()=> {
+    const el = ref.current;
+    if(!el) return;
+    
+    const handleMouseDown = (e: MouseEvent) => {
+      el.style.height = `20px`;
+      el.style.width = `20px`;
+    };
+
+    const handleMouseUp = (e: MouseEvent) => {
+      el.style.height = `32px`;
+      el.style.width = `31px`;
+    }
+
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      window.removeEventListener('mousedown', handleMouseDown); 
+      window.removeEventListener('mouseup', handleMouseUp); 
+    }
+  });
+
   return (
     <div
+			id='newCursor'
       ref={ref}
       className="fixed pointer-events-none size-8"
       style={{

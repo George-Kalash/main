@@ -3,3 +3,17 @@
 body{ 
   cursor: none;
 }
+
+@keyframes fade-in-out {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  70% { opacity: 1; }
+  90% { opacity: 0; }
+  100% { 
+    opacity: 0; 
+    display: none;
+  }
+}
+.animate-fade-in-out {
+  animation: fade-in-out 2s forwards;
+}
