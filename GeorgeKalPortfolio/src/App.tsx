@@ -22,8 +22,8 @@ export default function App() {
         {/* <Header /> */}
         <WelcomeAnimation />
       </div>
-      <div className="absolute bottom-4 right-4">
-        <Button hoverCursor="crosshair" onClick={() => console.log('clicked')}>
+      <div className="absolute bottom-100 right-4">
+        <Button onClick={() => console.log('clicked')}>
           Custom Cursor 🔹
         </Button>
       </div>

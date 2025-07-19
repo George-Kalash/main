@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-// useCursor.ts
+
 type CursorState = 'default' | 'pointer' | 'custom';
 
 export function useCursor() {

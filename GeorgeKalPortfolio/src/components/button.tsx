@@ -1,24 +1,23 @@
-import { useOverrideCursor } from './useOverrideCursor';
-
+import React from 'react';
+import { useHoverRect } from './useHoverRect';
 export default function Button({
   children,
-  className = '',
   onClick,
-  hoverCursor = 'pointer',        // could also be 'crosshair', 'wait', 'url(/fancy.svg), auto', etc.
+  className = '',
 }: {
   children: React.ReactNode;
-  className?: string;
   onClick?: () => void;
-  hoverCursor?: string;
+  className?: string;
 }) {
-  const { onEnter, onLeave } = useOverrideCursor(hoverCursor);
+  // Only the hover‑enter/leave callbacks are required
+  const { onEnter, onLeave } = useHoverRect();
 
   return (
     <button
-      className={`bg-blue-500 text-white font-bold py-2 px-4 rounded ${className}`}
       onClick={onClick}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
+      className={` bg-blue-500 text-white px-4 py-2 rounded ${className}`}
     >
       {children}
     </button>

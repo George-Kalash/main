@@ -4,7 +4,8 @@ body{
   cursor: none;
 }
 
-
+button:not([disabled]) { cursor: none; }
+``` :contentReference[oaicite:4]{index=4}
 
 nav {
   margin: 10px;
