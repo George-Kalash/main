@@ -3,30 +3,26 @@ import Header from "./components/header"
 import Cursor from "./components/cursor"
 import WelcomeAnimation from "./components/WelcomeAnimation"
 import Button from './components/button'
+import RollingText from './components/rollingText'
 // import { changeCursor } from './components/button'
 
 export default function App() {
   const [showHeader, setShowHeader] = useState(true)
   const [showWelcome, setShowWelcome] = useState(true);
   return (
-    <>
+    <div className='cursor-none h-screen'>
+      <Cursor />
 
       {showWelcome ? (
         <WelcomeAnimation onFinish={() => setShowWelcome(false)} />
       ) : (
-        <Header />
-      )}
-      <div className="h-screen">
+        <>
+          <Header />
+          <RollingText />
+        </>
         
-        <Cursor />
-        {/* <Header /> */}
-        <WelcomeAnimation />
-      </div>
-      <div className="absolute bottom-100 right-4">
-        <Button onClick={() => console.log('clicked')}>
-          Custom Cursor 🔹
-        </Button>
-      </div>
-    </>
+
+      )}
+    </div>
   )
 }

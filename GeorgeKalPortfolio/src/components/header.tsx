@@ -1,18 +1,19 @@
 import Button from "./button";
+import NameTag from "./nameTag";
 
 export default function Header() {
 
   return (
     <>
-      <header className="fixed flex top-0 left-0 right-0 z-50 justify-between">
+      <header className="fixed flex top-0 left-0 right-0 z-50 justify-around">
           <div className="left-side">
-            <div id="name" className="m-[10px] text-xl text-black font-bold hover:text-red-700 active:text-green-700">George K</div>
+            <NameTag />
           </div>
           <div className="right-side flex">
-            <nav>Home</nav>
-            <nav>Experience</nav>
-            <nav>Projects</nav>
-            <nav>Connect</nav>
+            <Button className="p-2.5 pt-0.5 pb-0.5 m-2">Home</Button>
+            <Button className="p-2.5 pt-0.5 pb-0.5 m-2">Experience</Button>
+            <Button className="p-2.5 pt-0.5 pb-0.5 m-2">Projects</Button>
+            <Button className="p-2.5 pt-0.5 pb-0.5 m-2">Connect</Button>
             <div className="theme_change_icon"></div>
           </div>
       </header>

@@ -35,24 +35,32 @@ export default function Cursor() {
       if (target.tagName === 'BUTTON') {
         target.style.cursor = 'none';
         inBtn.current = true;
-        const r = target.getBoundingClientRect();
-        ring.current!.style.width  = `${r.width}px`;
-        ring.current!.style.height = `${r.height}px`;
-        ring.current!.style.transform =
+
+        const r = target.getBoundingClientRect();       // precise size/pos
+        const ringEl = ring.current!;
+
+
+        ringEl.style.width        = `${r.width}px`;
+        ringEl.style.height       = `${r.height}px`;
+        ringEl.style.borderRadius = '10px';              // ← only once
+        ringEl.style.transform =
           `translate(${r.x + r.width / 2}px, ${r.y + r.height / 2}px)
-           translate(-50%, -50%)`;
+          translate(-50%, -50%)`;
       }
     };
 
     /** pointer left the element it was over */
     const out = (e: MouseEvent) => {
       const btn = e.target as HTMLElement;
-      if ((e.target as HTMLElement).tagName === 'BUTTON') {
-        btn.style.cursor = ''; 
+      if (btn.tagName === 'BUTTON') {
+        btn.style.cursor = '';
         inBtn.current = false;
-        ring.current!.style.width  = `${idleSize}px`;
-        ring.current!.style.height = `${idleSize}px`;
+        const ringEl = ring.current!;
+        ringEl.style.borderRadius = '9999px';        // one write
+        ringEl.style.width        = `${idleSize}px`;
+        ringEl.style.height       = `${idleSize}px`;
       }
+
     };
 
     window.addEventListener('mousemove', moveRing);   // pointer follow
@@ -70,12 +78,12 @@ export default function Cursor() {
     <div className="pointer-events-none fixed inset-0 z-50">
       <div
         ref={ring}
-        className="absolute border-2 border-black rounded-full transition-all duration-150 ease-out"
+        className="absolute border-2 border-white rounded-full transition-[width,height,border-radius] duration-130 ease-in-out"
         style={{ width: 32, height: 32, transform: 'translate(-50%,-50%)' }}
       />
       <div
         ref={dot}
-        className="absolute w-2 h-2 bg-black rounded-full"
+        className="absolute w-2 h-2 bg-white rounded-full"
         style={{ transform: 'translate(-50%,-50%)' }}
       />
     </div>

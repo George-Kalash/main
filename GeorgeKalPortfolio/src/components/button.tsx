@@ -17,9 +17,10 @@ export default function Button({
       onClick={onClick}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className={` bg-blue-500 text-white px-4 py-2 rounded ${className}`}
+      className={`px-4 py-2 rounded ${className}`}
     >
       {children}
     </button>
   );
 }
+
