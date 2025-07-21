@@ -11,13 +11,13 @@ This is a collection of my side projects I have worked on and/or completed since
   * **The_tables** – one of my first projects where I used Gapi for database.
 
   ## Projects Currently in development
+  * **DegreeFlow** - WIP project developed to assist university students in tracking their study progress.
   * **NBA** – an improved version of the NBA-predict. Goal: acheive an accuracy of over 84%.
   * **Internation Tennis** – Machine learning project focucing on predicting tennis matches. Goal: acheive an accuracy of over 85%.
   * **UI landing** – Will be used to show every project in an interactive format.
     
 ## Weekly Adgenda
-  - [x] Finish work on ELO 
-  - [ ] Start the work on the ML part of the NBA project
-  - [ ] Begin work on the web resume
+  - [ ] Improve GPA tracker
+  - [x] Start the work on the ML part of the NBA project
   - [x] Commit to a 7-day GitHub streak 
   - [x] Figure out why Git didn't count some of my commits as separate
