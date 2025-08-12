@@ -9,5 +9,162 @@
   <body >
     <div id="root" style="cursor: unset; overflow-x:hidden;"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js">
+      // Scene Setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // Particle System Parameters
+      const particleCount = 300;
+      const clusterStrength = 0.0015; // Attraction to cluster centers
+      const repulsionStrength = 0.002; // Repulsion between particles
+      const maxRepulsionDistance = 1.5; // Max distance for repulsion
+      const randomForce = 0.001; // Random movement to maintain dynamism
+      const dampingFactor = 0.98;
+      const boundary = 20;
+      let time = 0;
+
+      // Simple 3D noise function for cluster formation
+      function noise(x, y, z) {
+        return (
+          Math.sin(x * 0.5 + 123.4) *
+          Math.cos(y * 0.3 - 45.6) *
+          Math.sin(z * 0.7 + 78.9)
+        );
+      }
+
+      // Create Particles
+      const particlesGeometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const velocities = new Float32Array(particleCount * 3);
+
+      for (let i = 0; i < particleCount; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 15;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 15;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 15;
+        velocities[i * 3] = (Math.random() - 0.5) * 0.01;
+        velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.01;
+        velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.01;
+      }
+
+      particlesGeometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3)
+      );
+      particlesGeometry.setAttribute(
+        "velocity",
+        new THREE.BufferAttribute(velocities, 3)
+      );
+
+      const particleMaterial = new THREE.PointsMaterial({
+        color: 0x00ffff,
+        size: 0.1,
+        transparent: true,
+        opacity: 0.8,
+      });
+
+      const particles = new THREE.Points(particlesGeometry, particleMaterial);
+      scene.add(particles);
+
+      // Camera Positioning
+      camera.position.z = 30;
+
+      // Animation Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+        const positions = particlesGeometry.attributes.position.array;
+        const velocities = particlesGeometry.attributes.velocity.array;
+
+        // Reset forces each frame
+        for (let i = 0; i < velocities.length; i++) {
+          velocities[i] *= dampingFactor;
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+          const i3 = i * 3;
+          const x = positions[i3];
+          const y = positions[i3 + 1];
+          const z = positions[i3 + 2];
+
+          // 1. Cluster Attraction (Noise Field)
+          const nx = noise(x * 0.1 + time, y * 0.1, z * 0.1);
+          const ny = noise(x * 0.1, y * 0.1 + time, z * 0.1);
+          const nz = noise(x * 0.1, y * 0.1, z * 0.1 + time);
+
+          // Normalize to get direction towards cluster
+          const clusterDirection = new THREE.Vector3(nx, ny, nz).normalize();
+          const clusterForce = clusterDirection.multiplyScalar(clusterStrength);
+
+          // 2. Repulsion Between Particles
+          for (let j = i + 1; j < particleCount; j++) {
+            const j3 = j * 3;
+            const dx = positions[i3] - positions[j3];
+            const dy = positions[i3 + 1] - positions[j3 + 1];
+            const dz = positions[i3 + 2] - positions[j3 + 2];
+            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (distance < maxRepulsionDistance) {
+              const normalized = new THREE.Vector3(dx, dy, dz).normalize();
+              const repulsion = normalized.multiplyScalar(
+                repulsionStrength / (distance * distance)
+              );
+
+              // Apply repulsion to both particles
+              velocities[i3] += repulsion.x;
+              velocities[i3 + 1] += repulsion.y;
+              velocities[i3 + 2] += repulsion.z;
+
+              velocities[j3] -= repulsion.x;
+              velocities[j3 + 1] -= repulsion.y;
+              velocities[j3 + 2] -= repulsion.z;
+            }
+          }
+
+          // 3. Random Movement (Maintain initial randomness)
+          velocities[i3] += (Math.random() - 0.5) * randomForce;
+          velocities[i3 + 1] += (Math.random() - 0.5) * randomForce;
+          velocities[i3 + 2] += (Math.random() - 0.5) * randomForce;
+
+          // Apply cluster force
+          velocities[i3] += clusterForce.x;
+          velocities[i3 + 1] += clusterForce.y;
+          velocities[i3 + 2] += clusterForce.z;
+
+          // Update Position
+          positions[i3] += velocities[i3];
+          positions[i3 + 1] += velocities[i3 + 1];
+          positions[i3 + 2] += velocities[i3 + 2];
+
+          // Boundary Conditions with Wrap-Around
+          if (Math.abs(x) > boundary) positions[i3] = -Math.sign(x) * boundary;
+          if (Math.abs(y) > boundary)
+            positions[i3 + 1] = -Math.sign(y) * boundary;
+          if (Math.abs(z) > boundary)
+            positions[i3 + 2] = -Math.sign(z) * boundary;
+        }
+
+        particlesGeometry.attributes.position.needsUpdate = true;
+        particlesGeometry.attributes.velocity.needsUpdate = true;
+        renderer.render(scene, camera);
+      }
+
+      // Handle resizing
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      animate();
+    </script>
   </body>
 </html>

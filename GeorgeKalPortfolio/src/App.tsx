@@ -4,11 +4,13 @@ import Cursor from "./components/cursor"
 import WelcomeAnimation from "./components/WelcomeAnimation"
 import Button from './components/button'
 import RollingText from './components/rollingText'
+
 // import { changeCursor } from './components/button'
 
 export default function App() {
   const [showHeader, setShowHeader] = useState(true)
   const [showWelcome, setShowWelcome] = useState(true);
+
   return (
     <div className='cursor-none h-screen'>
       <Cursor />
@@ -19,6 +21,7 @@ export default function App() {
         <>
           <Header />
           <RollingText />
+         
         </>
         
 
