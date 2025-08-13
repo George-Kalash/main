@@ -1,60 +1,93 @@
-# td_top10_basic_only.py
-import os, csv, time, requests
+# td_sp500_top10_quotes_to_csv.py
+import os, sys, csv, time, requests
 
 API_KEY = os.getenv("TWELVE_DATA_API_KEY")
 if not API_KEY:
-    raise SystemExit("Set TWELVE_DATA_API_KEY")
+    sys.exit("Set TWELVE_DATA_API_KEY environment variable.")
 
 BASE = "https://api.twelvedata.com"
-TOP10 = ["NVDA","MSFT","AAPL","AMZN","META","AVGO","GOOGL","GOOG","TSLA","BRK.B"]
-EXCH = {s: "NASDAQ" for s in TOP10}
-EXCH["BRK.B"] = "NYSE"  # Berkshire B on NYSE
 
-def _get(path, params, retries=3, backoff=1.7):
+# Top 10 S&P 500 by index weight (as of today); update as needed. :contentReference[oaicite:2]{index=2}
+TOP10 = ["NVDA","MSFT","AAPL","AMZN","META","AVGO","GOOGL","GOOG","TSLA","BRK.B"]
+
+# Exchange mapping to avoid wrong listings (US only)
+EXCH = {s: "NASDAQ" for s in TOP10}
+EXCH["BRK.B"] = "NYSE"
+
+def td_get(path, params, retries=4, backoff=1.6):
+    """GET helper with gentle backoff on 429/5xx. Returns {} on TD error payloads."""
     url = f"{BASE}{path}"
-    params = dict(params or {}); params["apikey"] = API_KEY
+    q = dict(params or {})
+    q["apikey"] = API_KEY
     for i in range(retries):
-        r = requests.get(url, params=params, timeout=30)
-        if r.status_code in (429,500,502,503,504):
-            time.sleep(backoff**(i+1)); continue
-        # if gated (401/402/403), return {}
-        if r.status_code in (401,402,403):
+        r = requests.get(url, params=q, timeout=20)
+        if r.status_code in (429, 500, 502, 503, 504):
+            time.sleep(backoff ** (i + 1))
+            continue
+        r.raise_for_status()
+        try:
+            data = r.json()
+        except Exception:
             return {}
-        try: return r.json()
-        except: return {}
+        if isinstance(data, dict) and data.get("status") == "error":
+            # plan-gated/bad param -> treat as empty so script never crashes
+            return {}
+        return data
     return {}
 
 def get_name(sym):
-    d = _get("/stocks", {"symbol": sym, "exchange": EXCH[sym], "country":"United States"})
+    # Use reference data to get the correct US company name. :contentReference[oaicite:3]{index=3}
+    d = td_get("/stocks", {"symbol": sym, "exchange": EXCH[sym], "country": "United States"})
     arr = d.get("data") if isinstance(d, dict) else None
-    return (arr[0]["name"] if isinstance(arr, list) and arr else "") or sym
+    return (arr[0].get("name") if isinstance(arr, list) and arr else "") or sym
 
-def get_market_cap(sym):
-    # Try new, light /market_cap first; if not available on your plan, this returns {}
-    d = _get("/market_cap", {"symbol": sym, "exchange": EXCH[sym]})
-    if isinstance(d, dict):
-        # can be {"market_cap": "..."} or {"data":[{"market_cap":...}]}, handle both
-        if "market_cap" in d: return d["market_cap"]
-        if "data" in d and d["data"]: return d["data"][0].get("market_cap")
-    return None  # Basic without access → None
+def get_quote(sym):
+    # Basic snapshot quote (works on Basic). :contentReference[oaicite:4]{index=4}
+    return td_get("/quote", {"symbol": sym, "exchange": EXCH[sym]})
 
-rows=[]
-for sym in TOP10:
-    name = get_name(sym)
-    mcap = get_market_cap(sym)
-    rows.append({
+def flatten_quote(qobj, sym):
+    """Flatten the quote JSON into CSV-ready fields."""
+    out = {
         "symbol": sym,
-        "name": name,
-        "market_cap": mcap,
-        "revenue_annual": None,
-        "net_income_annual": None,
-        "eps": None,
-        "pe_ttm": None,
-        "note": "Using Basic plan; fundamentals gated"
-    })
+        "name": "",                         # fill in separately
+        "exchange": qobj.get("exchange"),
+        "currency": qobj.get("currency"),
+        "datetime": qobj.get("datetime"),
+        "open": qobj.get("open"),
+        "high": qobj.get("high"),
+        "low": qobj.get("low"),
+        "close": qobj.get("close"),
+        "previous_close": qobj.get("previous_close"),
+        "change": qobj.get("change"),
+        "percent_change": qobj.get("percent_change"),
+        "volume": qobj.get("volume"),
+        "fifty_two_week_low": None,
+        "fifty_two_week_high": None,
+    }
+    ftw = qobj.get("fifty_two_week")
+    if isinstance(ftw, dict):
+        out["fifty_two_week_low"]  = ftw.get("low")
+        out["fifty_two_week_high"] = ftw.get("high")
+    return out
 
-with open("sp500_top10_fundamentals.csv","w",newline="",encoding="utf-8") as f:
-    w = csv.DictWriter(f, fieldnames=rows[0].keys())
-    w.writeheader(); w.writerows(rows)
+rows = []
+for sym in TOP10:
+    q = get_quote(sym) or {}
+    rec = flatten_quote(q, sym)
+    rec["name"] = get_name(sym)
+    rows.append(rec)
 
-print("Wrote", len(rows), "rows to sp500_top10_fundamentals.csv")
+# Write CSV
+out_path = "sp500_top10_quotes.csv"
+fieldnames = [
+    "symbol","name","exchange","currency","datetime",
+    "open","high","low","close","previous_close",
+    "change","percent_change","volume",
+    "fifty_two_week_low","fifty_two_week_high"
+]
+with open(out_path, "w", newline="", encoding="utf-8") as f:
+    w = csv.DictWriter(f, fieldnames=fieldnames)
+    w.writeheader()
+    w.writerows(rows)
+
+print(f"Wrote {len(rows)} rows to {out_path}")
