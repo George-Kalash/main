@@ -1,0 +1,11 @@
+symbol,name,market_cap,revenue_annual,net_income_annual,eps,pe_ttm,note
+NVDA,NVIDIA Corporation,,,,,,fields may be blank if your plan does not include fundamentals
+MSFT,Microsoft Corporation,,,,,,fields may be blank if your plan does not include fundamentals
+AAPL,Apple Inc.,,,93736000000.0,,,fields may be blank if your plan does not include fundamentals
+AMZN,Amazon.com Inc. - Canadian Depositary Receipt,,,,,,fields may be blank if your plan does not include fundamentals
+META,Meta Corporation Public Company Limited,,,,,,fields may be blank if your plan does not include fundamentals
+AVGO,Broadcom Inc.,,,,,,fields may be blank if your plan does not include fundamentals
+GOOGL,Alphabet Inc.,,,,,,fields may be blank if your plan does not include fundamentals
+GOOG,GO Accumulation Fund,,,,,,fields may be blank if your plan does not include fundamentals
+TSLA,Tesla Inc.,,,,,,fields may be blank if your plan does not include fundamentals
+BRK.B,Berkshire Hathaway Inc.,,,,,,fields may be blank if your plan does not include fundamentals
