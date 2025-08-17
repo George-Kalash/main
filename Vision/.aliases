@@ -1,0 +1,15 @@
+# (paste your alias lines here, e.g.: # alias gs='git status -sb' # alias venvup='[ -d .venv ] || python3 -m venv .venv; source .venv/bin/activate' # ...) # 2) 
+load it from zsh (interactive shells)
+echo '[ -f ~/.aliases ] && source ~/.aliases' >> ~/.zshrc
+
+# 3) load it from bash (interactive shells)
+echo '[ -f ~/.aliases ] && source ~/.aliases' >> ~/.bashrc
+
+# 4) on macOS, make login bash sessions read ~/.bashrc, too
+grep -q 'source ~/.bashrc' ~/.bash_profile 2>/dev/null || \
+  echo '[ -f ~/.bashrc ] && source ~/.bashrc' >> ~/.bash_profile
+
+# 5) reload both shells
+source ~/.zshrc
+source ~/.bashrc
+
