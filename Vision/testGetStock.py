@@ -153,7 +153,7 @@ def main():
         
     price = latest_earnings(SYMBOL, EXCHANGE)
     print(f"{SYMBOL} latest earnings: {price}")
-    if price is not None:
+    if price is not None: 
         print(f"{SYMBOL} latest price: {price}")
     print("No EPS or shares_outstanding available (check API plan/headers).")
 
