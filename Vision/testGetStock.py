@@ -11,6 +11,28 @@ SEC_UA = os.getenv("SEC_UA", "").strip()  # only needed for SEC fallback
 SYMBOL = (sys.argv[1] if len(sys.argv) > 1 else "AAPL").upper()
 EXCHANGE = os.getenv("EXCHANGE", "")  # optional, e.g. NASDAQ or NYSE
 
+def latest_price(symbol: str, exchange: str | None = None):
+    """
+    Return the latest price for `symbol` from Twelve Data /quote.
+    If `price` is missing, fall back to `close`. Returns float or None.
+    """
+    params = {"symbol": symbol}
+    if exchange:
+        params["exchange"] = exchange  # optional hint, e.g., "NASDAQ" or "NYSE"
+
+    d = td_get("/quote", params)  # uses your existing td_get helper
+
+    # Handle TD error objects: {"status": "error", ...}
+    if not isinstance(d, dict) or d.get("status") == "error":
+        return None
+
+    val = d.get("price") or d.get("close")
+    try:
+        return float(val)
+    except (TypeError, ValueError):
+        return None
+
+
 def td_get(path, params):
     url = f"https://api.twelvedata.com{path}"
     q = dict(params or {})
@@ -158,4 +180,8 @@ def main():
     print("No EPS or shares_outstanding available (check API plan/headers).")
 
 if __name__ == "__main__":
-    main()
+    if not os.getenv("TWELVE_DATA_API_KEY"):
+        sys.exit("Set TWELVE_DATA_API_KEY")
+    sym = sys.argv[1] if len(sys.argv) > 1 else "AAPL"
+    px = latest_price(sym, "NASDAQ")
+    print(px if px is not None else "No price available")

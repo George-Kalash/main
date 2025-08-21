@@ -1,6 +1,6 @@
-#!/usr/bin/env python3
 import os, sys, time, csv, requests
 from typing import Dict, Any, List
+
 
 API_KEY = os.getenv("TWELVE_DATA_API_KEY")
 if not API_KEY:

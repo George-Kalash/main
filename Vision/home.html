@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vision</title>
+</head>
+<body>
+  <h1>Enter your stock ticker here</h1>
+
+  <!-- remove action to avoid navigation; JS will handle submit -->
+  <form id="quote-form" autocomplete="off">
+    <input id="ticker" name="ticker" type="text" placeholder="Ticker Symbol (e.g., AAPL)" required />
+    <button type="submit">Get Stock Info</button>
+  </form>
+
+  <!-- Your app code -->
+  <script type="module" src="./getStock.js"></script>
+</body>
+</html>
