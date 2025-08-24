@@ -3,7 +3,7 @@
 body{ 
   cursor: none !important;
   color: white;
-  background-color: #0f172a;
+  background-color: #000000;
 }
 
 button:not([disabled]) { cursor: none; }

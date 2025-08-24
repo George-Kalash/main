@@ -75,7 +75,7 @@ export default function Cursor() {
 
   /* — 3.  render both layers — */
   return (
-    <div className="pointer-events-none fixed inset-0 z-50">
+    <div className="pointer-events-none fixed inset-0 z-1000">
       <div
         ref={ring}
         className="absolute border-2 border-white rounded-full transition-[width,height,border-radius] duration-130 ease-in-out"
