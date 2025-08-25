@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Button from "./button";
-import { MarketPanel } from "./MarketPanel";
+import MarketPanel from "./MarketPanel";
 
 /**
  * FinanceHeroPreview
@@ -15,13 +15,12 @@ import { MarketPanel } from "./MarketPanel";
  * <FinanceHeroPreview apiKey="YOUR_KEY" symbols={['AAPL','MSFT']} resumeHref="/resume.pdf" />
  */
 export default function FinanceHeroPreview({
-  apiKey,
   symbols = ["AAPL", "MSFT", "NVDA", "GOOGL", "AMZN", "META", "TSLA"],
   resumeHref = "/resume.pdf",
-  titleName = "George Kalashlinskyi",
+  titleName = " Kalashlinskyi",
   titleTagline = "Mathematical Finance",
 }) {
-  const API_KEY = apiKey ?? import.meta.env?.VITE_TWELVE_API_KEY ?? "";
+
 
   return (
     <div
@@ -37,7 +36,7 @@ export default function FinanceHeroPreview({
     >
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-black/20 border-b border-white/10">
-        <nav className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 md:px-8 py-4">
+        <nav className="mx-auto flex items-center justify-between px-4 sm:px-6 md:px-8 py-4">
           <a href="#" className="font-bold tracking-wide">GK</a>
           <ul className="hidden sm:flex gap-6 text-sm">
             <li><Button className="opacity-90 hover:opacity-100" href="#about">About</Button></li>
@@ -63,13 +62,15 @@ export default function FinanceHeroPreview({
             <h1 className="mt-3 text-4xl sm:text-5xl md:text-6xl font-black leading-tight">
               {/* inline gradient so we don't need a helper class */}
               {/* <span className="mr-2">George</span> */}
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">
+              
+              <div>George</div>
+              <span className="bg-gradient-to-r from-green-600 via-white to-red-600 bg-clip-text text-transparent">
                 {titleName.replace(/^George\\s+/i, "")}
               </span>
             </h1>
             <p className="mt-4 text-white/80 max-w-2xl">
               University of Waterloo student blending quantitative analysis with practical software.
-              I build reliable tools and data-driven projects—always with performance, clarity, and accessibility in mind.
+              I build reliable tools and data-driven projects, always with performance, clarity, and accessibility in mind.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button href="#projects" className="px-5 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg hover:bg-white/20">
@@ -82,7 +83,7 @@ export default function FinanceHeroPreview({
           </div>
 
           <div className="md:col-span-2">
-            <MarketPanel apiKey={API_KEY} symbols={symbols} />
+            <MarketPanel symbols={symbols} />
           </div>
         </div>
       </section>

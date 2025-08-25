@@ -15,24 +15,12 @@ export default function App() {
   return (
     <div className='cursor-none h-screen'>
       <Cursor />
-
-      {showWelcome ? (
-        <WelcomeAnimation onFinish={() => setShowWelcome(false)} />
-      ) : (
-        <>
-          {/* <Header /> */}
-          {/* <RollingText /> */}
-          <HeroPreview
-            apiKey="72b6201928424072a94dc8050afcc523"   // or put in .env as VITE_TWELVE_API_KEY
-            symbols={["AAPL","MSFT","NVDA","GOOGL","AMZN","META","TSLA"]}
-            resumeHref="/resume.pdf"
-          />
-         
-        </>
-        
-
-
-      )}
+      <WelcomeAnimation onFinish={() => setShowWelcome(false)} />
+      <HeroPreview
+        apiKey=""   // or put in .env as VITE_TWELVE_API_KEY
+        symbols={["AAPL","MSFT","NVDA","GOOGL", "SHOP","AMZN","META", "NFLX", "WMT", ]}
+        resumeHref="/resume.pdf"
+      />         
     </div>
   )
 }
