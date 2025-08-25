@@ -1,11 +1,13 @@
 import React from "react";
 
 /**
- * GiantResumeSection
- * Big, self-contained section that lists Experience and Projects from your resume.
- * Tailwind-only (no extra deps), responsive, and safe to drop in after <HeroPreview />.
+ * GiantResumeSection (v2)
+ * - Experience first, then Projects directly underneath.
+ * - Subtle decorations: gradient glow, glass cards, timeline dots, hover lift.
+ * - Self-contained, Tailwind-only. Safe to mount right after <HeroPreview />.
  */
 export default function GiantResumeSection() {
+  // ====== DATA (from your resume) ======
   const experiences = [
     {
       role: "Math Instructor",
@@ -13,9 +15,11 @@ export default function GiantResumeSection() {
       location: "Kitchener, ON",
       period: "Aug 2024 – Present",
       points: [
-        "Led group and 1:1 lessons; tracked and analyzed student performance to adapt instruction.",
-        "Collaborated in a team-teaching environment; covered topics up to Senior Calculus & Geometry.",
-        "Delivered personalized instruction with the Mathnasium Method to boost understanding and confidence.",
+        "Led group and 1:1 lessons in a fast-paced environment.",
+        "Tracked and analyzed student performance to adapt instruction.",
+        "Collaborated in a team-teaching environment to meet diverse needs.",
+        "Engaged students up to Senior Calculus & Geometry.",
+        "Delivered personalized instruction with the Mathnasium Method.",
       ],
       tags: ["Education", "Pedagogy", "Assessment"],
     },
@@ -26,10 +30,10 @@ export default function GiantResumeSection() {
       period: "Sep 2024 – Dec 2024",
       points: [
         "Built a C# Windows app to streamline internal file management with lightweight automation.",
-        "Contributed to code reviews with a senior dev; improved code quality metrics by ~15%.",
-        "Fixed critical bugs using Visual Studio debugger; authored technical docs and user guides.",
-        "Implemented GitHub OAuth to fetch/visualize usage data and identify high-frequency actions.",
-        "Explored AI-powered text classification for better internal tagging and search.",
+        "Contributed to code reviews; improved code quality metrics.",
+        "Fixed critical bugs using Visual Studio debugger; wrote technical docs and user guides.",
+        "Added GitHub OAuth to fetch/visualize usage data and identify high-frequency actions.",
+        "Explored AI-powered text classification for better tagging and search.",
       ],
       tags: ["C#", "Windows", "GitHub OAuth", "Docs", "Debugging"],
     },
@@ -38,10 +42,10 @@ export default function GiantResumeSection() {
   const projects = [
     {
       title: "Investment Project",
-      stack: ["Financial analytics", "Excel"],
+      stack: ["Financial Analytics", "Excel"],
       highlights: [
-        "Built a portfolio of high-growth/potential stocks with balanced risk/growth.",
-        "Outperformed the S&P 500 in 2024 by 6.42%.",
+        "Built a growth-tilted portfolio balancing risk and return.",
+        "Outperformed the S&P 500 in 2024 by ~6.42%.",
         "Achieved ~54% ROI over two years.",
       ],
     },
@@ -49,92 +53,119 @@ export default function GiantResumeSection() {
       title: "NBA Match Outcome Predictor",
       stack: ["Python", "pandas", "scikit-learn"],
       highlights: [
-        "Trained on results from 2002 → latest season (~28,000 games).",
-        "Recorded peak accuracy ≈ 82% with ROC > 0.9.",
+        "Trained on outcomes from 2002 → latest season (~28,000 games).",
+        "Peak accuracy ≈ 82% with ROC > 0.9.",
       ],
     },
     {
       title: "Live Face Detection",
       stack: ["Python", "OpenCV"],
       highlights: [
-        "Live camera face detection with real-time blur to mask faces on screen.",
+        "Real-time camera face detection with instant blur masking.",
       ],
     },
   ];
 
+  // Simple inline SVG icon (no extra deps)
+  const Dot = (props) => (
+    <svg viewBox="0 0 20 20" aria-hidden="true" className={props.className}>
+      <circle cx="10" cy="10" r="6" />
+    </svg>
+  );
+
   return (
     <section
       id="experience-projects"
-      className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16"
+      className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20"
       aria-label="Experience and Projects"
     >
-      {/* Decorative background */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <div className="absolute left-1/2 top-0 h-64 w-[120vw] -translate-x-1/2 bg-gradient-to-b from-white/0 via-white/20 to-white/0 blur-3xl dark:from-white/0 dark:via-white/5 dark:to-white/0" />
+      {/* Decorative background glow */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/2 top-[-200px] h-[520px] w-[1200px] -translate-x-1/2 rounded-full blur-3xl opacity-60 bg-[radial-gradient(closest-side,rgba(99,102,241,0.25),transparent_70%)] dark:opacity-40" />
+        <div className="absolute left-[10%] bottom-[-180px] h-[360px] w-[360px] rounded-full blur-3xl opacity-50 bg-[radial-gradient(closest-side,rgba(16,185,129,0.18),transparent_70%)]" />
+        <div className="absolute right-[8%] top-[20%] h-[280px] w-[280px] rounded-full blur-3xl opacity-50 bg-[radial-gradient(closest-side,rgba(236,72,153,0.16),transparent_70%)]" />
       </div>
 
-      <header className="mb-10 text-center">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Experience & Projects
+      {/* Header */}
+      <header className="mb-14 text-center">
+        <span className="inline-block rounded-full border border-neutral-200/60 px-3 py-1 text-xs uppercase tracking-wider text-neutral-600 backdrop-blur dark:border-neutral-800 dark:text-neutral-300">
+          Resume Highlights
+        </span>
+        <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+          Experience
+          <span className="bg-gradient-to-r from-indigo-500 via-emerald-500 to-pink-500 bg-clip-text text-transparent"> &amp; Projects</span>
         </h2>
         <p className="mt-3 text-base text-neutral-600 dark:text-neutral-300">
-          A concise snapshot of what I’ve built and where I’ve worked.
+          A quick tour through where I’ve worked — followed by what I’ve built.
         </p>
       </header>
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        {/* EXPERIENCE */}
-        <div>
-          <h3 className="mb-6 text-2xl font-semibold">Experience</h3>
-          <ol className="relative border-s border-neutral-200 dark:border-neutral-800">
-            {experiences.map((exp, i) => (
-              <li key={i} className="mb-10 ms-6">
-                <span className="absolute -start-3 mt-2 h-6 w-6 rounded-full bg-neutral-200 ring-8 ring-white dark:bg-neutral-700 dark:ring-neutral-900" />
-                <div className="rounded-2xl border border-neutral-200/60 bg-white/60 p-6 backdrop-blur-lg shadow-sm dark:border-neutral-800 dark:bg-neutral-900/60">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <div className="min-w-0">
-                      <h4 className="truncate text-lg font-semibold">
-                        {exp.role} <span className="text-neutral-500">— {exp.company}</span>
-                      </h4>
-                      <p className="text-sm text-neutral-500">
-                        {exp.location} · {exp.period}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {exp.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+      {/* EXPERIENCE (timeline) */}
+      <div className="relative mb-16">
+        <ol className="relative border-s border-neutral-200 dark:border-neutral-800">
+          {experiences.map((exp, i) => (
+            <li key={i} className="mb-12 ms-6">
+              {/* Timeline node */}
+              <span className="absolute -start-3 mt-2">
+                <span className="relative inline-flex h-6 w-6 items-center justify-center">
+                  <span className="absolute inline-flex h-6 w-6 animate-ping rounded-full bg-indigo-400/30" />
+                  <span className="relative inline-flex h-6 w-6 items-center justify-center rounded-full bg-neutral-200 ring-8 ring-white dark:bg-neutral-700 dark:ring-neutral-900">
+                    <Dot className="h-2.5 w-2.5 fill-indigo-500 dark:fill-indigo-400" />
+                  </span>
+                </span>
+              </span>
+
+              {/* Card */}
+              <div className="group rounded-2xl border border-neutral-200/70 bg-white/70 p-6 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/60">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <h3 className="truncate text-lg font-semibold">
+                      {exp.role} <span className="text-neutral-500">— {exp.company}</span>
+                    </h3>
+                    <p className="text-sm text-neutral-500">
+                      {exp.location} · {exp.period}
+                    </p>
                   </div>
-                  <ul className="mt-4 list-disc space-y-2 ps-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
-                    {exp.points.map((p, idx) => (
-                      <li key={idx}>{p}</li>
+                  <div className="flex flex-wrap gap-2">
+                    {exp.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+                      >
+                        {t}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
-              </li>
-            ))}
-          </ol>
-        </div>
 
-        {/* PROJECTS */}
-        <div>
-          <h3 className="mb-6 text-2xl font-semibold">Projects</h3>
+                <ul className="mt-4 list-disc space-y-2 ps-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
+                  {exp.points.map((p, idx) => (
+                    <li key={idx}>{p}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
 
-          <div className="grid gap-6">
-            {projects.map((proj, i) => (
-              <article
-                key={i}
-                className="rounded-2xl border border-neutral-200/60 bg-white/60 p-6 backdrop-blur-lg shadow-sm transition hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/60"
-              >
+      {/* SECTION DIVIDER */}
+      <div className="relative my-12">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800" />
+        <div className="pointer-events-none absolute inset-x-0 -top-3 mx-auto h-6 w-6 rounded-full bg-white/80 shadow-sm ring-1 ring-neutral-200 dark:bg-neutral-900/80 dark:ring-neutral-800" />
+      </div>
+
+      {/* PROJECTS (directly under Experience) */}
+      <div>
+        <h3 className="mb-6 text-2xl font-semibold">Projects</h3>
+        <div className="grid gap-6 md:grid-cols-2">
+          {projects.map((proj, i) => (
+            <article
+              key={i}
+              className="group rounded-2xl border border-transparent bg-gradient-to-br from-white/70 to-white/60 p-[1px] shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:shadow-md dark:from-neutral-900/70 dark:to-neutral-900/60"
+            >
+              {/* gradient border wrapper */}
+              <div className="rounded-2xl bg-white/80 p-6 dark:bg-neutral-900/70">
                 <header className="flex flex-wrap items-baseline justify-between gap-2">
                   <h4 className="text-lg font-semibold">{proj.title}</h4>
                   <div className="flex flex-wrap gap-2">
@@ -148,20 +179,19 @@ export default function GiantResumeSection() {
                     ))}
                   </div>
                 </header>
-
                 <ul className="mt-4 list-disc space-y-2 ps-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-200">
                   {proj.highlights.map((h, idx) => (
                     <li key={idx}>{h}</li>
                   ))}
                 </ul>
-              </article>
-            ))}
-          </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
 
-      {/* Subtle footer divider */}
-      <div className="mt-12 h-px w-full bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800" />
+      {/* Footer hairline */}
+      <div className="mt-14 h-px w-full bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800" />
     </section>
   );
 }

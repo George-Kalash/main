@@ -26,13 +26,7 @@ export default function FinanceHeroPreview({
     <div
       className="min-h-screen text-white"
       // keep cursor unset so your custom cursor isn’t overridden
-      style={{
-        cursor: "unset",
-        background:
-          "radial-gradient(1200px 500px at 50% -10%, rgba(99,102,241,0.25), transparent)," +
-          "radial-gradient(800px 400px at 80% 20%, rgba(16,185,129,0.25), transparent)," +
-          "radial-gradient(600px 300px at 20% 30%, rgba(56,189,248,0.2), transparent)",
-      }}
+      
     >
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-sm bg-black/20 border-b border-white/10">
@@ -64,7 +58,7 @@ export default function FinanceHeroPreview({
               {/* <span className="mr-2">George</span> */}
               
               <div>George</div>
-              <span className="bg-gradient-to-r from-green-600 via-white to-red-600 bg-clip-text text-transparent">
+              <span className=" white  ">
                 {titleName.replace(/^George\\s+/i, "")}
               </span>
             </h1>
