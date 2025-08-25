@@ -5,6 +5,7 @@ import WelcomeAnimation from "./components/WelcomeAnimation"
 import Button from './components/button'
 import RollingText from './components/rollingText'
 import HeroPreview from "./components/HeroPreview";
+import GiantResumeSection from './components/GiantResumeSection'
 
 // import { changeCursor } from './components/button'
 
@@ -17,10 +18,10 @@ export default function App() {
       <Cursor />
       <WelcomeAnimation onFinish={() => setShowWelcome(false)} />
       <HeroPreview
-        apiKey=""   // or put in .env as VITE_TWELVE_API_KEY
         symbols={["AAPL","MSFT","NVDA","GOOGL", "SHOP","AMZN","META", "NFLX", "WMT", ]}
         resumeHref="/resume.pdf"
       />         
+      <GiantResumeSection></GiantResumeSection>
     </div>
   )
 }
