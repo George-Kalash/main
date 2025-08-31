@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 // --- Your existing CompanyDataBox unchanged ---
 function CompanyDataBox({ symbol, price, percent }) {
@@ -12,12 +12,18 @@ function CompanyDataBox({ symbol, price, percent }) {
   const formatPercent = (p) =>
     p == null || !Number.isFinite(p) ? "--" : `${p >= 0 ? "+" : ""}${p.toFixed(2)}%`;
   return (
-    <div className={`relative rounded-xl p-3 md:p-4 transition-all duration-300 ${isLoading ? 'bg-white/5 animate-pulse' : 'bg-black/30 backdrop-blur-xl border border-white/10 shadow-lg hover:scale-105' }`}>
+    <div className={`relative rounded-xl p-3 md:p-4 backdrop-blur-lg transition-all duration-300 ${isLoading ? 'bg-black/30 backdrop-blur-sm'  : 'bg-black/60 backdrop-blur-[90px] border border-white/10 hover:scale-105' }`}>
       <div className=" items-center justify-between mb-1">
         <div className="font-bold text-sm md:text-base text-white truncate">{symbol}</div>
       </div>
       <div className={`text-lg md:text-sm font-mono text-white ${isLoading ? 'h-8' : ''}`}>
-        {isLoading ? '' : (hasPrice ? `$${formatPrice(price)}` : "--")}
+        {isLoading ? (
+          <div className="flex items-end gap-1 h-6">
+            {[0,1,2,3,4].map((n) => (
+              <span key={n} className="eq-bar bg-white/70 rounded-sm" style={{ width: n===1?4: n===3?3:2, height: `${8 + (n*4)}px`, animationDelay: `${n * 120}ms` }} />
+            ))}
+          </div>
+        ) : (hasPrice ? `$${formatPrice(price)}` : "--")}
       </div>
         {hasPercent && (
           <div className={`text-xs inline font-mono px-2 py-0.5 rounded-full ${isPositive ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}`}>
@@ -34,11 +40,14 @@ function jsonp(url) {
     const cb = `__gfcb_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     window[cb] = (data) => { resolve(data); delete window[cb]; script.remove(); };
     const script = document.createElement("script");
-    script.src = `${url}${url.includes("?") ? "&" : "?"}callback=${cb}`;
+    // Support both ?prefix= and ?callback=
+    const sep = url.includes("?") ? "&" : "?";
+    script.src = `${url}${sep}prefix=${cb}`;
     script.onerror = (e) => { delete window[cb]; script.remove(); reject(e); };
     document.body.appendChild(script);
   });
 }
+
 
 export default function MarketPanel({
   // Paste your Apps Script Web App URL here:
@@ -48,6 +57,10 @@ export default function MarketPanel({
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
+
+  // keep latest rows in a ref so the interval callback always sees current state
+  const rowsRef = useRef(rows);
+  useEffect(() => { rowsRef.current = rows; }, [rows]);
 
   // bg floaters (unchanged)
   const floaters = useMemo(() => {
@@ -62,50 +75,119 @@ export default function MarketPanel({
   }, [symbols]);
 
   useEffect(() => {
+    // poller that: (a) fetches only symbols on screen, (b) runs every 5s, (c) cleans up correctly
     let alive = true;
-    const qs = `symbols=${encodeURIComponent(symbols.join(","))}`;
+    let controller = new AbortController();
 
-    const get = async () => {
-      setErr(null); setLoading(true);
+    const fetchOnce = async (isInitial = false) => {
+      if (!alive) return;
+
+      // Only request tickers that are currently on screen
+      // If we haven't loaded yet, fall back to the incoming `symbols` prop.
+      const onScreen = rowsRef.current?.length
+        ? rowsRef.current.map(r => r.symbol)
+        : symbols;
+
+      // Ensure stable order & no duplicates
+      const requested = Array.from(new Set(onScreen.map(s => String(s || "").toUpperCase())));
+      const qs = `symbols=${encodeURIComponent(requested.join(","))}`;
       const url = `${endpoint}?${qs}`;
+
       try {
-        // Try normal JSON first
-        const res = await fetch(url, { method: "GET" });
+        if (isInitial) { setLoading(true); setErr(null); }
+
+        // Try standard fetch first (abortable)
+        const res = await fetch(url, { method: "GET", signal: controller.signal });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json = await res.json();
-        if (alive) setRows((json?.data || []).map(n => ({
-          symbol: String(n.symbol || "").toUpperCase(),
-          price: Number.isFinite(+n.price) ? +n.price : null,
-          percent: Number.isFinite(+n.percent) ? +n.percent : null,
-        })));
+  const json: any = await res.json();
+
+        if (!alive) return;
+
+        const data: any[] = Array.isArray(json?.data) ? json.data : [];
+        const map = new Map<string, { price: number | null; percent: number | null }>(
+          data.map((n: any) => [
+            String(n.symbol || "").toUpperCase(),
+            {
+              price: Number.isFinite(+n.price) ? +n.price : null,
+              percent: Number.isFinite(+n.percent) ? +n.percent : null,
+            },
+          ])
+        );
+
+        // Preserve the UI order by mapping over `requested`
+        const nextRows = requested.map(sym => ({
+          symbol: sym,
+          price: map.get(sym)?.price ?? null,
+          percent: map.get(sym)?.percent ?? null,
+        }));
+
+        setRows(nextRows);
       } catch (e) {
-        // Fallback to JSONP (Apps Script CORS workaround)
+        // Ignore aborts; otherwise try JSONP as a CORS fallback
+        if (e?.name === "AbortError") return;
         try {
-          const jsonpData = await jsonp(url);
-          if (alive) setRows((jsonpData?.data || []).map(n => ({
-            symbol: String(n.symbol || "").toUpperCase(),
-            price: Number.isFinite(+n.price) ? +n.price : null,
-            percent: Number.isFinite(+n.percent) ? +n.percent : null,
-          })));
+          const jsonpData: any = await jsonp(url);
+          if (!alive) return;
+
+          const data: any[] = Array.isArray(jsonpData?.data) ? jsonpData.data : [];
+          const map = new Map<string, { price: number | null; percent: number | null }>(
+            data.map((n: any) => [
+              String(n.symbol || "").toUpperCase(),
+              {
+                price: Number.isFinite(+n.price) ? +n.price : null,
+                percent: Number.isFinite(+n.percent) ? +n.percent : null,
+              },
+            ])
+          );
+
+          const nextRows = requested.map(sym => ({
+            symbol: sym,
+            price: map.get(sym)?.price ?? null,
+            percent: map.get(sym)?.percent ?? null,
+          }));
+
+          setRows(nextRows);
         } catch (ee) {
-          if (alive) setErr(String(ee?.message || ee));
+          setErr(String(ee?.message || ee));
         }
       } finally {
-        if (alive) setLoading(false);
+        if (isInitial && alive) setLoading(false);
       }
     };
 
-    get();
-    return () => { alive = false; };
-  }, [endpoint, symbols]);
+    // Initial load
+    fetchOnce(true);
+
+    // Every 5 seconds, abort any in-flight fetch and start a new one
+    const timer = setInterval(() => {
+      controller.abort(); // cancel prior fetch to avoid overlaps
+      controller = new AbortController();
+      fetchOnce(false);
+    }, 10000);
+
+    // Cleanup: stop interval and abort any in-flight request
+    return () => {
+      alive = false;
+      clearInterval(timer);
+      controller.abort();
+    };
+  }, [endpoint, symbols]); // re-create poller if endpoint or symbols prop changes
 
   const showing = (loading && rows.length === 0)
     ? symbols.map(s => ({ symbol: s, price: null, percent: null }))
     : rows;
 
   return (
-    <div className="relative rounded-3xl p-5 md:p-6 bg-gray-900/50 backdrop-blur-xl border border-white/20 shadow-lg overflow-hidden min-h-[380px] font-sans text-white">
-      <style>{`@keyframes float{0%{transform:translateY(-100px) translateX(-100px) scale(.8);opacity:.35}50%{transform:translateY(150px) translateX(150px) scale(1.08);opacity:.65}100%{transform:translateY(-100px) translateX(-100px) scale(.8);opacity:.35}} .animate-float{animation:float 10s ease-in-out infinite;}`}</style>
+    <div className="relative rounded-3xl p-5 md:p-6 bg-black/30 backdrop-blur-xl border border-white/20 shadow-lg overflow-hidden min-h-[380px] font-sans text-white">
+      <style>{`
+        @keyframes float{0%{transform:translateY(-100px) translateX(-100px) scale(.8);opacity:.35}50%{transform:translateY(150px) translateX(150px) scale(1.08);opacity:.65}100%{transform:translateY(-100px) translateX(-100px) scale(.8);opacity:.35}}
+        .animate-float{animation:float 10s ease-in-out infinite;}
+
+        /* Equalizer bars for loading state */
+        @keyframes eqRise { 0% { transform: scaleY(0.4); opacity: 0.6 } 50% { transform: scaleY(1.0); opacity: 1 } 100% { transform: scaleY(0.5); opacity: 0.7 } }
+        .eq-bar { display:inline-block; transform-origin: bottom; animation: eqRise 700ms ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) { .eq-bar { animation: none; opacity: 0.7 } }
+      `}</style>
 
       <div className="pointer-events-none absolute inset-0">
         {floaters.map(f => (

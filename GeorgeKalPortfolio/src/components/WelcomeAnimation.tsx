@@ -1,3 +1,5 @@
+import BgGradient from "./BgGradient";
+
 type Props = { onFinish: () => void };
 
 function getTodaysDate(date = new Date()) {
@@ -23,7 +25,8 @@ export default function WelcomeAnimation({ onFinish }: Props){
       <div 
         className="animate-fade-in-out z-[1000] w-full h-full bg-amber-950A"
         onAnimationEnd={onFinish}>
-        <div className="grid-cols-2 items-center absolute top-2/5 left-[calc(50%-100px)] mr-auto ml-auto inline">
+        <div className="grid-cols-2 items-center absolute top-2/5 left-[calc(50%-100px)] mr-auto ml-auto inline ">
+          {/* <BgGradient /> */}
           <div className="text-5xl font-bold">Welcome</div>
           <div className="text-center">{date}</div>
         </div>

@@ -6,6 +6,7 @@ import Button from './components/button'
 import RollingText from './components/rollingText'
 import HeroPreview from "./components/HeroPreview";
 import GiantResumeSection from './components/GiantResumeSection'
+import BgGradient from './components/BgGradient'
 
 // import { changeCursor } from './components/button'
 
@@ -14,19 +15,15 @@ export default function App() {
   const [showWelcome, setShowWelcome] = useState(true);
 
   return (
-    <div className='cursor-none h-screen' >
-      <div className="fixed w-screen h-screen z-0 top-0 left-0" style={{ // <- fix this make this separate tags for each radii
-        background:
-          "radial-gradient(1200px 500px at 50% -10%, rgba(99,102,241,0.25), transparent)," +
-          "radial-gradient(800px 400px at 80% 20%, rgba(16,185,129,0.25), transparent)," +
-          "radial-gradient(600px 300px at 20% 30%, rgba(56,189,248,0.2), transparent)",
-      }}>
-        
-      </div>
+    <div className='cursor-none ' >
+      {/* Fixed background sits behind all content and uses background-attachment:fixed
+          to avoid moving with scroll or transforms in other layers. */}
+      
       <Cursor />
-      <WelcomeAnimation onFinish={() => setShowWelcome(false)} />
+      {/* <WelcomeAnimation onFinish={() => setShowWelcome(false)} /> */}
+      <BgGradient />
       <HeroPreview
-        symbols={["AAPL","MSFT","NVDA","GOOGL", "SHOP","AMZN","META", "NFLX", "WMT", ]}
+        symbols={["AAPL","MSFT","NVDA","GOOG", "SHOP","AMZN","META", "NFLX", "WMT", ]}
         resumeHref="/resume.pdf"
       />         
       <GiantResumeSection></GiantResumeSection>
