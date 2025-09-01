@@ -1,7 +1,8 @@
 import os, requests
 import time
 from datetime import date
-
+from edgar import get_filings
+print("EdgarTools installed successfully!")
 
 SEC_UA = os.getenv("SEC_UA", "Your Name your@email.com (VisionApp/0.1)")
 CIK10 = "0000320193"  # Apple
