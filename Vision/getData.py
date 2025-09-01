@@ -3,33 +3,16 @@ import time
 from datetime import date
 
 
-UA = os.getenv("SEC_UA", "Your Name your@email.com (VisionApp/0.1)")
+SEC_UA = os.getenv("SEC_UA", "Your Name your@email.com (VisionApp/0.1)")
 CIK10 = "0000320193"  # Apple
-
-s = requests.Session()
-s.headers.update({"User-Agent": UA, "Accept-Encoding": "gzip, deflate"})
-
-subs = s.get(f"https://data.sec.gov/submissions/CIK{CIK10}.json", timeout=30).json()
-recent = subs["filings"]["recent"]
-
-out = []
-for form, acc, prim in zip(recent["form"], recent["accessionNumber"], recent["primaryDocument"]):
-    if form in ("10-K"):
-        cik_nolead = str(int(CIK10))  # drop leading zeros for the path
-        acc_nodash = acc.replace("-", "")
-        url = f"https://www.sec.gov/Archives/edgar/data/{cik_nolead}/{acc_nodash}/{prim}"
-        out.append((form, acc, url))
-
-for row in out[:10]:
-    print(row)
-
-
 
 SEC_UA = os.getenv("SEC_UA", "Your Name your@email (VisionApp/0.1)")
 HEADERS = {"User-Agent": SEC_UA, "Accept-Encoding": "gzip, deflate"}
 
 TICKER_MAP_URL = "https://www.sec.gov/files/company_tickers.json"
 COMPANY_FACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010}.json"
+
+
 
 # US-GAAP tags to try (in priority order)
 TAGS = {
@@ -50,6 +33,25 @@ TAGS = {
         "NetIncomeLoss"
     ],
 }
+
+
+def getReports(companyCIK, reports, num):
+    s = requests.Session()
+    s.headers.update({"User-Agent": SEC_UA, "Accept-Encoding": "gzip, deflate"})
+
+    subs = s.get(f"https://data.sec.gov/submissions/CIK{companyCIK}.json", timeout=30).json()
+    recent = subs["filings"]["recent"]
+
+    out = []
+    for form, acc, prim in zip(recent["form"], recent["accessionNumber"], recent["primaryDocument"]):
+        if form in (reports):
+            cik_nolead = str(int(companyCIK))  # drop leading zeros for the path
+            acc_nodash = acc.replace("-", "")
+            url = f"https://www.sec.gov/Archives/edgar/data/{cik_nolead}/{acc_nodash}/{prim}"
+            out.append((form, acc, url))
+
+    for row in out[:num]:
+        print(row)
 
 def get_json(url, params=None, sleep=0.2):
     """GET JSON with fair-access friendly pause."""
@@ -133,3 +135,4 @@ if __name__ == "__main__":
         print("Usage: python script.py <TICKER|CIK>")
         sys.exit(1)
     print_income_statement(sys.argv[1])
+    getReports(ticker_to_cik(sys.argv[1]), ["10-K"], 2)
