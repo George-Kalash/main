@@ -1,8 +1,19 @@
 import os, requests
 import time
 from datetime import date
+import edgar
 from edgar import get_filings
 print("EdgarTools installed successfully!")
+company = edgar.Company("AAPL")
+financials = company.get_financials()
+filings = get_filings()
+# for i in range(0,10):
+#     print(filings[i])  
+IC = company.income_statement()
+if IC is not None:
+    print( IC)
+# print(financials)
+print(f"Shares Outstanding: {company.shares_outstanding:,.0f}")
 
 SEC_UA = os.getenv("SEC_UA", "Your Name your@email.com (VisionApp/0.1)")
 CIK10 = "0000320193"  # Apple
