@@ -10,19 +10,28 @@ print("EdgarTools installed successfully!")
 
 from edgar.entity import public_companies
 
+# ADGENDA:
+# 0. organize files by type <- DONE
+# 1. create method to retrieve specific financial data get_latest_financial_data(ticker="AAPL", statement_type="10-K") -> pd.DataFrame ie net income, stockholder equity ...
+# 1.2. Extract relevant data from the income statement, balance sheet, cash flow statements.
 
 co = Company("NVDA")
 fin = co.get_financials()
 
 df = fin.income_statement().to_dataframe()
-
+bs = fin.balance_sheet().to_dataframe()
+print(bs)
 if not df.empty:
     # Use the 'concept' column for a more reliable match
     row = df[df["concept"] == "us-gaap_NetIncomeLoss"]
+    row2 = bs[bs["concept"] == "us-gaap_StockholdersEquity"]
+    print(row2)
     if not row.empty:
         # latest period is typically the last column
         net_income = row.iloc[0, 2]
+        stockholder_equity = row2.iloc[0, 2]
         print(f"Net Income: {net_income}")
+        print(f"Stockholder Equity: {stockholder_equity}")
     else:
         print("Net income not found in the income statement.")
         # If you want to see the whole dataframe when net income is not found
