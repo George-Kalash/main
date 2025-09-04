@@ -1,43 +1,134 @@
 import os, requests
-import time
-from datetime import date
-from pandas import *
-import pandas as pd
+import sys
+import json
+from pathlib import Path
 from edgar import Company
+import pandas as pd
 from edgar import *  
+from edgar.xbrl.xbrl import XBRL
+from edgar.xbrl import XBRLS
+from edgar.entity import public_companies
+
+
 set_identity("scccbf@gmail.com") 
 print("EdgarTools installed successfully!")
 
-from edgar.entity import public_companies
 
 # ADGENDA:
 # 0. organize files by type <- DONE
-# 1. create method to retrieve specific financial data get_latest_financial_data(ticker="AAPL", statement_type="10-K") -> pd.DataFrame ie net income, stockholder equity ...
+# 1. create method to retrieve specific financial data get_latest_financial_data(ticker="AAPL", statement_type="10-K") -> pd.DataFrame ie net income, stockholder equity ... <- Done
 # 1.2. Extract relevant data from the income statement, balance sheet, cash flow statements.
 
-co = Company("NVDA")
-fin = co.get_financials()
+data = json.loads(Path("../random/ticker_to_cik.json").read_text(encoding="utf-8"))
 
-df = fin.income_statement().to_dataframe()
-bs = fin.balance_sheet().to_dataframe()
-print(bs)
-if not df.empty:
-    # Use the 'concept' column for a more reliable match
-    row = df[df["concept"] == "us-gaap_NetIncomeLoss"]
-    row2 = bs[bs["concept"] == "us-gaap_StockholdersEquity"]
-    print(row2)
-    if not row.empty:
-        # latest period is typically the last column
-        net_income = row.iloc[0, 2]
-        stockholder_equity = row2.iloc[0, 2]
-        print(f"Net Income: {net_income}")
-        print(f"Stockholder Equity: {stockholder_equity}")
-    else:
-        print("Net income not found in the income statement.")
-        # If you want to see the whole dataframe when net income is not found
-        # print(df)
-else:
-    print("Failed to retrieve income statement. The DataFrame is empty.")
+
+ticker = sys.argv[1] if len(sys.argv) > 1 else "AAPL"
+
+
+co = Company(ticker)
+
+
+
+
+def getIncomeStatement(c="AAPL", periods=1, form="10-K"):   
+    co = Company(c)
+    if not co.is_company: 
+        print(f"Company with ticker {ticker} not found.")
+        return pd.DataFrame()
+    filings = co.get_filings(form=form).head(periods) 
+    xbrls = XBRLS.from_filings(filings)
+    try:
+        return xbrls.statements.income_statement().to_dataframe()
+    except Exception as e:
+        print(f"Error retrieving income statement for {c}: {e}")
+        return pd.DataFrame()
+
+def getBalanceSheet(c="AAPL", periods=1, form="10-K"):
+    co = Company(c)
+    if not co.is_company: 
+        print(f"Company with ticker {ticker} not found.")
+        return pd.DataFrame()
+    filings = co.get_filings(form=form).head(periods) 
+    xbrls = XBRLS.from_filings(filings)
+    try:
+        return xbrls.statements.balance_sheet().to_dataframe()
+    except Exception as e:
+        print(f"Error retrieving balance sheet for {c}: {e}")
+        return pd.DataFrame()
+
+def getCashFlowStatement(c="AAPL", periods=1, form="10-K"): 
+    co = Company(c)
+    if not co.is_company: 
+        print(f"Company with ticker {ticker} not found.")
+        return pd.DataFrame()
+    filings = co.get_filings(form=form).head(periods) 
+    xbrls = XBRLS.from_filings(filings)
+
+    try:
+        return xbrls.statements.cashflow_statement().to_dataframe()
+    except Exception as e:
+        print(f"Error retrieving cash flow statement for {c}: {e}")
+        return pd.DataFrame()
+
+def getLatestFinancialData(c="AAPL", periods=1, form="10-K") -> object:
+    income_statement = getIncomeStatement(c, periods, form)
+    balance_sheet = getBalanceSheet(c, periods, form)
+    cash_flow_statement = getCashFlowStatement(c, periods, form)
+
+    # Combine all data into a single DataFrame
+    financial_data = {
+        "Income Statement": income_statement,
+        "Balance Sheet": balance_sheet,
+        "Cash Flow Statement": cash_flow_statement
+    }
+    return financial_data
+
+def toCSV(data: pd.DataFrame, filename: str):
+    # Convert the financial data to a CSV format
+    data.to_csv(filename, index=False)
+
+def __main__():
+    print("initializing main")
+    dropconcept = getLatestFinancialData(ticker, periods=8, form="10-K")["Income Statement"].drop("concept", axis=1)
+    toCSV(dropconcept, f"{ticker}_financials.csv")
+    print(dropconcept)
+
+__main__()
+
+
+# print(companyFacts.entity_info())
+
+
+# fin = co.get_financials()
+
+# print(fin.income_statement())
+
+
+# df = fin.income_statement().to_dataframe()
+# bs = fin.balance_sheet().to_dataframe()
+# # print(df)
+# if not df.empty:
+#     # Use the 'concept' column for a more reliable match
+#     revenue = df[df["concept"] == "us-gaap_Revenues"]
+#     if revenue.empty:
+#         revenue = df[df["concept"] == "us-gaap_RevenueFromContractWithCustomerExcludingAssessedTax"]
+#     row = df[df["concept"] == "us-gaap_NetIncomeLoss" ]
+#     row2 = bs[bs["concept"] == "us-gaap_StockholdersEquity"]
+#     print(row2)
+#     if not row.empty:
+#         # latest period is typically the last column
+#         revenue = revenue.iloc[0, 2]
+#         net_income = row.iloc[0, 2]
+#         stockholder_equity = row2.iloc[0, 2]
+#         print(f"Revenue: {revenue:,.0f}")
+#         print(f"Net Income: {net_income}")
+#         print(f"Stockholder Equity: {stockholder_equity}")
+#     else:
+#         print("Net income not found in the income statement.")
+#         # If you want to see the whole dataframe when net income is not found
+#         # print(df)
+# else:
+#     print("Failed to retrieve income statement. The DataFrame is empty.")
 
 # print(dir(income_statement))
 # print(vars(Company))
@@ -57,16 +148,6 @@ else:
 #     print(c)
 #     print(ticker[0])
 # print(f"Revenue: ${revenue:,.0f}, Net Income: ${net_income:,.0f}")
-def getCompanyStatement(c="AAPL", IS=True, BS=True, CFS=True): 
-    company = Company(c)
-    filings = company.get_filings()
-    # company_facts = company.get_facts_for_namespace()
-
-    
-    # print(filings)
-
-
-getCompanyStatement()
 
 # financials = company.get_financials()
 # filings = get_filings()

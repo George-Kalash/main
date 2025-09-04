@@ -79,12 +79,6 @@ export default function GiantResumeSection() {
       className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20"
       aria-label="Experience and Projects"
     >
-      {/* Decorative background glow */}
-      {/* <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-1/2 top-[-200px] h-[520px] w-[1200px] -translate-x-1/2 rounded-full blur-3xl opacity-60 bg-[radial-gradient(closest-side,rgba(99,102,241,0.25),transparent_70%)] dark:opacity-40" />
-        <div className="absolute left-[10%] bottom-[-180px] h-[360px] w-[360px] rounded-full blur-3xl opacity-50 bg-[radial-gradient(closest-side,rgba(16,185,129,0.18),transparent_70%)]" />
-        <div className="absolute right-[8%] top-[20%] h-[280px] w-[280px] rounded-full blur-3xl opacity-50 bg-[radial-gradient(closest-side,rgba(236,72,153,0.16),transparent_70%)]" />
-      </div> */}
 
       {/* Header */}
       <header className="mb-14 text-center">
@@ -93,7 +87,7 @@ export default function GiantResumeSection() {
         </span>
         <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl text-white">
           Experience
-          <span className="bg-gradient-to-r from-indigo-500 via-emerald-500 to-pink-500 bg-clip-text text-transparent"> &amp; Projects</span>
+          <span className="bg-gradient-to-r bg-clip-text text-transparent"> &amp; Projects</span>
         </h2>
         <p className="mt-3 text-base text-white/80">
           A quick tour through where I’ve worked — followed by what I’ve built.
