@@ -19,16 +19,28 @@ print("EdgarTools installed successfully!")
 # 1. create method to retrieve specific financial data get_latest_financial_data(ticker="AAPL", statement_type="10-K") -> pd.DataFrame ie net income, stockholder equity ... <- Done
 # 1.2. Extract relevant data from the income statement, balance sheet, cash flow statements.
 
-data = json.loads(Path("../random/ticker_to_cik.json").read_text(encoding="utf-8"))
+
 
 
 ticker = sys.argv[1] if len(sys.argv) > 1 else "AAPL"
 
+company = Company('AAPL')
+filing = company.latest("10-K")
 
+# Parse XBRL data
+xbrl = XBRL.from_filing(filing)
 co = Company(ticker)
 
 
+def getCompanyFacts(c="AAPL"):
+    return co.get_facts()
 
+def getIndustry(c="AAPL"):
+    co = Company(c)
+    if not co.is_company: 
+        print(f"Company with ticker {ticker} not found.")
+        return pd.DataFrame()
+    return co.industry
 
 def getIncomeStatement(c="AAPL", periods=1, form="10-K"):   
     co = Company(c)
@@ -84,14 +96,32 @@ def getLatestFinancialData(c="AAPL", periods=1, form="10-K") -> object:
     return financial_data
 
 def toCSV(data: pd.DataFrame, filename: str):
-    # Convert the financial data to a CSV format
-    data.to_csv(filename, index=False)
+    # Create a copy to avoid modifying the original DataFrame while iterating
+    cleaned_data = data.copy()
+
+    # Iterate over each cell in the DataFrame
+    for index, row in cleaned_data.iterrows():
+        for col in cleaned_data.columns:
+            cell = cleaned_data.at[index, col]
+            if isinstance(cell, (int, float)):
+                # Check if the absolute value is large enough to be converted
+                if abs(cell) > 1_000_000:
+                    # Update the value in the DataFrame
+                    cleaned_data.at[index, col] = cell / 1_000_000
+    
+    # Fill any remaining NaN values with a placeholder
+    cleaned_data.fillna("-")
+    
+    # Save the modified DataFrame to a CSV file
+    cleaned_data.to_csv(filename, index=False)
 
 def __main__():
     print("initializing main")
-    dropconcept = getLatestFinancialData(ticker, periods=8, form="10-K")["Income Statement"].drop("concept", axis=1)
+    dropconcept = getLatestFinancialData(ticker, periods=11, form="10-K")["Balance Sheet"].drop("concept", axis=1)
     toCSV(dropconcept, f"{ticker}_financials.csv")
-    print(dropconcept)
+    available_periods = xbrl.reporting_periods
+    print(available_periods)
+    # print(dropconcept)
 
 __main__()
 
