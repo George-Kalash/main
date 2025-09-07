@@ -31,6 +31,12 @@ filing = company.latest("10-K")
 xbrl = XBRL.from_filing(filing)
 co = Company(ticker)
 
+def getIncomeStatementXBRL(c="AAPL", whichType="XBRL"):
+    co = Company(c)
+    filings = co.get_filings(form="10-K").head(6)
+    xbrls = XBRLS.from_filings(filings)
+    stitched = xbrls.statements
+    # income_trend = stitched.income_statement(max_periods=8)
 
 def getCompanyFacts(c="AAPL"):
     return co.get_facts()
@@ -117,11 +123,13 @@ def toCSV(data: pd.DataFrame, filename: str):
 
 def __main__():
     print("initializing main")
-    dropconcept = getLatestFinancialData(ticker, periods=11, form="10-K")["Balance Sheet"].drop("concept", axis=1)
-    toCSV(dropconcept, f"{ticker}_financials.csv")
-    available_periods = xbrl.reporting_periods
-    print(available_periods)
+    # dropconcept = getLatestFinancialData(ticker, periods=11, form="10-K")["Balance Sheet"].drop("concept", axis=1)
+    # toCSV(dropconcept, f"{ticker}_financials.csv")
+    # available_periods = xbrl.reporting_periods
+    # print(available_periods)
     # print(dropconcept)
+    print(getIncomeStatement(c="AAPL", periods=10, form="10-K"))
+    # print(getIncomeStatementXBRL("AAPL", whichType=" "))
 
 __main__()
 
