@@ -17,7 +17,7 @@ import LetterReveal from "./LetterReveal";
  */
 export default function FinanceHeroPreview({
   symbols = ["AAPL", "MSFT", "NVDA", "GOOGL", "AMZN", "META", "TSLA"],
-  resumeHref = "/resume.pdf",
+  resumeHref = "public/resume.pdf",
   titleName = " Kalashlinskyi",
   titleTagline = "Mathematical Finance",
 }) {

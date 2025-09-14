@@ -130,7 +130,7 @@ export default function GiantResumeSection() {
       {/* SECTION DIVIDER */}
       <div className="relative my-12">
         <div className="h-px w-full bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800" />
-        <div className="pointer-events-none absolute inset-x-0 -top-3 mx-auto h-6 w-6 rounded-full bg-white/80 shadow-sm ring-1 ring-neutral-200 dark:bg-neutral-900/80 dark:ring-neutral-800" />
+        {/* <div className="pointer-events-none absolute inset-x-0 -top-3 mx-auto h-6 w-6 rounded-full bg-white/80 shadow-sm ring-1 ring-neutral-200 dark:bg-neutral-900/80 dark:ring-neutral-800" /> */}
       </div>
 
       <Projects/>
