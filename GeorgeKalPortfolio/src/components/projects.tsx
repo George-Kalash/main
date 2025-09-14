@@ -23,14 +23,6 @@ export default function GiantResumeSection() {
       ],
     },
     {
-      title: "Live Face Detection",
-      stack: ["Python", "OpenCV"],
-      complete: true,
-      highlights: [
-        "Real-time camera color detection with instant blur masking.",
-      ],
-    },
-    {
       title: "DCF builder automation",
       stack: ["Python", "EdgarTools", "Pandas", "SEC API"],
       complete: false,
@@ -38,6 +30,15 @@ export default function GiantResumeSection() {
         "Automated DCF model building with real SEC filings data.",
       ],
     },
+    {
+      title: "Live Face Detection",
+      stack: ["Python", "OpenCV"],
+      complete: true,
+      highlights: [
+        "Real-time camera color detection with instant blur masking.",
+      ],
+    },
+    
   ];
 
   const projectStatusDecoration = [
