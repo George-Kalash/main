@@ -12,25 +12,27 @@ function CompanyDataBox({ symbol, price, percent }) {
   const formatPercent = (p) =>
     p == null || !Number.isFinite(p) ? "--" : `${p >= 0 ? "+" : ""}${p.toFixed(2)}%`;
   return (
-    <div className={`relative rounded-xl p-3 md:p-4 backdrop-blur-lg transition-all duration-300 ${isLoading ? 'bg-black/30 backdrop-blur-sm'  : 'bg-black/60 backdrop-blur-[90px] border border-white/10 hover:scale-105' }`}>
-      <div className=" items-center justify-between mb-1">
-        <div className="font-bold text-sm md:text-base text-white truncate">{symbol}</div>
+    <a href={`https://finance.yahoo.com/quote/${symbol}`} target="_blank" rel="noreferrer" className="no-underline cursor-none">
+    <div className={`cursor-enlarge relative rounded-xl p-3 md:p-4 backdrop-blur-lg transition-all duration-300 ${isLoading ? 'bg-black/30 backdrop-blur-sm'  : 'bg-black/60 backdrop-blur-[90px] border border-white/10 hover:scale-105' }`}>
+      <div className="cursor-enlarge items-center justify-between mb-1">
+        <div className="cursor-enlarge font-bold text-sm md:text-base text-white truncate">{symbol}</div>
       </div>
-      <div className={`text-lg md:text-sm font-mono text-white ${isLoading ? 'h-8' : ''}`}>
+      <div className={`cursor-enlarge text-lg md:text-sm font-mono text-white ${isLoading ? 'h-8' : ''}`}>
         {isLoading ? (
-          <div className="flex items-end gap-1 h-6">
+          <div className="flex items-end gap-1 h-6 cursor-enlarge">
             {[0,1,2,3,4].map((n) => (
-              <span key={n} className="eq-bar bg-white/70 rounded-sm" style={{ width: n===1?4: n===3?3:2, height: `${8 + (n*4)}px`, animationDelay: `${n * 120}ms` }} />
+              <span key={n} className="cursor-enlarge eq-bar bg-white/70 rounded-sm" style={{ width: n===1?4: n===3?3:2, height: `${8 + (n*4)}px`, animationDelay: `${n * 120}ms` }} />
             ))}
           </div>
         ) : (hasPrice ? `$${formatPrice(price)}` : "--")}
       </div>
         {hasPercent && (
-          <div className={`text-xs inline font-mono px-2 py-0.5 rounded-full ${isPositive ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}`}>
+          <div className={`cursor-enlarge text-xs inline font-mono px-2 py-0.5 rounded-full ${isPositive ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}`}>
             {formatPercent(percent)}
           </div>
         )}
     </div>
+    </a>
   );
 }
 

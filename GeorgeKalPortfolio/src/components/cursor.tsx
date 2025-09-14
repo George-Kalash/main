@@ -40,12 +40,18 @@ export default function Cursor() {
         const ringEl = ring.current!;
 
 
-        ringEl.style.width        = `${r.width}px`;
-        ringEl.style.height       = `${r.height}px`;
+        ringEl.style.width = `${r.width}px`;
+        ringEl.style.height = `${r.height}px`;
         ringEl.style.borderRadius = '10px';              // ← only once
         ringEl.style.transform =
           `translate(${r.x + r.width / 2}px, ${r.y + r.height / 2}px)
           translate(-50%, -50%)`;
+      } else if ((target.tagName === 'A' && !target.classList.contains('no-cursor-enlarge')) || target.classList.contains('cursor-enlarge')) {
+        const ringEl = ring.current!;
+        const newSize = idleSize * 1.25;
+        ringEl.style.width = `${newSize}px`;
+        ringEl.style.height = `${newSize}px`;
+        ringEl.style.borderRadius = '9999px';
       }
     };
 
@@ -59,6 +65,12 @@ export default function Cursor() {
         ringEl.style.borderRadius = '9999px';        // one write
         ringEl.style.width        = `${idleSize}px`;
         ringEl.style.height       = `${idleSize}px`;
+      } else if ((btn.tagName === 'A' && !btn.classList.contains('no-cursor-enlarge')) || btn.classList.contains('cursor-enlarge')) {
+        // Reset ring size for regular links
+        const ringEl = ring.current!;
+        ringEl.style.width = `${idleSize}px`;
+        ringEl.style.height = `${idleSize}px`;
+        ringEl.style.borderRadius = '9999px';
       }
 
     };

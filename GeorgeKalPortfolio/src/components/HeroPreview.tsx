@@ -25,7 +25,7 @@ export default function FinanceHeroPreview({
 
   return (
     <div
-      className="min-h-screen text-white"
+      className="min-h-screen text-white grid content-around"
       // keep cursor unset so your custom cursor isn’t overridden
       
     >
@@ -34,15 +34,15 @@ export default function FinanceHeroPreview({
         <nav className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 ">
           <a href="#" className="font-bold tracking-wide"><Button>GK</Button></a>
           <ul className="hidden sm:flex gap-6 text-sm">
-            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100" href="#about"><Button>About</Button></a></li>
-            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100" href="#experience"><Button>Experience</Button></a></li>
-            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100" href="#projects"><Button>Projects</Button></a></li>
-            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100" href="#skills"><Button>Skills</Button></a></li>
-            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100" href="#contact"><Button>Contact</Button></a></li>
+            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100 cursor-none no-cursor-enlarge" href="#about"><Button>About</Button></a></li>
+            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100 cursor-none no-cursor-enlarge" href="#experience"><Button>Experience</Button></a></li>
+            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100 cursor-none no-cursor-enlarge" href="#projects"><Button>Projects</Button></a></li>
+            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100 cursor-none no-cursor-enlarge" href="#skills"><Button>Skills</Button></a></li>
+            <li><a className="px-4 py-2 rounded opacity-90 hover:opacity-100 cursor-none no-cursor-enlarge" href="#contact"><Button>Contact</Button></a></li>
           </ul>
           <a
             href={resumeHref}
-            className="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg"
+            className="text-xs sm:text-sm px-3 sm:px-4 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg cursor-none"
           >
             Resume
           </a>
@@ -62,11 +62,11 @@ export default function FinanceHeroPreview({
             </h1>
             <p className="mt-4 text-white/80 max-w-2xl"><LetterReveal text={"University of Waterloo student blending quantitative analysis with practical software. I build reliable tools and data-driven projects, always with performance, clarity, and accessibility in mind."} className="text-white/80" charClass="inline-block" maxDelay={700} duration={300} /></p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="#projects" className="px-5 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg hover:bg-white/20">
-                <LetterReveal text="View Projects" className="text-white" charClass="inline-block" maxDelay={500} duration={300} />
+              <a href="#projects" className="px-5 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg hover:bg-white/20 cursor-none">
+                View Projects
               </a>
-              <a href="#contact" className="px-5 py-3 rounded-full border border-white/20 hover:border-white/40">
-                <LetterReveal text="Get in touch" className="text-white" charClass="inline-block" maxDelay={500} duration={300} />
+              <a href="#contact" className="px-5 py-3 rounded-full border border-white/20 hover:border-white/40 cursor-none">
+                Get in touch
               </a>
             </div>
           </div>
@@ -76,8 +76,8 @@ export default function FinanceHeroPreview({
           </div>
         </div>
       </section>
-      <div className="absolute inset-x-0 bottom-10 flex justify-center mt-8">
-        <a href="#experience" className="text-[50px] text-white/70 hover:text-white/90 animate-bounce" aria-label="Scroll down to Projects section">
+      <div className="inset-x-0 bottom-[1%] flex justify-center mt-8">
+        <a href="#experience" className="text-[50px] text-white/70 hover:text-white/90 animate-bounce cursor-none" aria-label="Scroll down to Projects section">
           &#8964;
         </a>
       </div>

@@ -3,6 +3,14 @@
   cursor: none;
 }
 
+*:hover {
+  cursor: none;
+}
+
+a:hover {
+  cursor: none;
+}
+
 html,
 body,
 #root {
