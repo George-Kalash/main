@@ -55,8 +55,9 @@ def getIncomeStatement(c="AAPL", periods=1, form="10-K"):
         return pd.DataFrame()
     filings = co.get_filings(form=form).head(periods) 
     xbrls = XBRLS.from_filings(filings)
+    stmt = xbrls.statements.income_statement().to_dataframe()
     try:
-        return xbrls.statements.income_statement().to_dataframe()
+        return stmt.fillna(0)
     except Exception as e:
         print(f"Error retrieving income statement for {c}: {e}")
         return pd.DataFrame()
@@ -128,7 +129,9 @@ def __main__():
     # available_periods = xbrl.reporting_periods
     # print(available_periods)
     # print(dropconcept)
-    print(getIncomeStatement(c="AAPL", periods=10, form="10-K"))
+    getIncomeStatement(c="TSLA", periods=12, form="10-K")
+    getBalanceSheet(c="TSLA", periods=12, form="10-K")
+    print(getCashFlowStatement(c="TSLA", periods=12, form="10-K"))
     # print(getIncomeStatementXBRL("AAPL", whichType=" "))
 
 __main__()

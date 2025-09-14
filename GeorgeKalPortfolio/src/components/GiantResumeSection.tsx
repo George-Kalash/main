@@ -1,5 +1,5 @@
 import React from "react";
-
+import Projects from "./projects";
 /**
  * GiantResumeSection (v2)
  * - Experience first, then Projects directly underneath.
@@ -39,32 +39,6 @@ export default function GiantResumeSection() {
     },
   ];
 
-  const projects = [
-    {
-      title: "Investment Project",
-      stack: ["Financial Analytics", "Excel"],
-      highlights: [
-        "Built a growth-tilted portfolio balancing risk and return.",
-        "Outperformed the S&P 500 in 2024 by ~6.42%.",
-        "Achieved ~54% ROI over two years.",
-      ],
-    },
-    {
-      title: "NBA Match Outcome Predictor",
-      stack: ["Python", "pandas", "scikit-learn"],
-      highlights: [
-        "Trained on outcomes from 2002 → latest season (~28,000 games).",
-        "Peak accuracy ≈ 82% with ROC > 0.9.",
-      ],
-    },
-    {
-      title: "Live Face Detection",
-      stack: ["Python", "OpenCV"],
-      highlights: [
-        "Real-time camera face detection with instant blur masking.",
-      ],
-    },
-  ];
 
   // Simple inline SVG icon (no extra deps)
   const Dot = (props: { className?: string }) => (
@@ -87,7 +61,7 @@ export default function GiantResumeSection() {
         </span>
         <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl text-white">
           Experience
-          <span className="bg-gradient-to-r bg-clip-text text-transparent"> &amp; Projects</span>
+          <span className="bg-gradient-to-r bg-clip-text text-green-500"> &amp; Projects</span>
         </h2>
         <p className="mt-3 text-base text-white/80">
           A quick tour through where I’ve worked — followed by what I’ve built.
@@ -119,7 +93,7 @@ export default function GiantResumeSection() {
               </span>
 
               {/* Card */}
-              <div className="group relative rounded-2xl border border-white/10 bg-white/6 p-6 shadow-lg backdrop-blur-md transition-transform duration-150 hover:-translate-y-1 hover:shadow-2xl ring-1 ring-indigo-400/8 overflow-hidden">
+              <div className="group relative rounded-2xl border border-white/10 bg-black/6 p-6 shadow-lg backdrop-blur-md transition-transform duration-150 hover:-translate-y-1 hover:shadow-2xl ring-1 ring-indigo-400/8 overflow-hidden">
                 {/* sheen */}
                 <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/8 via-white/4 to-transparent mix-blend-overlay" />
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -135,8 +109,7 @@ export default function GiantResumeSection() {
                     {exp.tags.map((t) => (
                       <span
                         key={t}
-                        className="rounded-full border border-neutral-700 bg-neutral-800/60 px-3 py-1 text-xs font-medium text-white/80"
-                      >
+                        className="rounded-full border border-neutral-700 bg-neutral-800/60 px-3 py-1 text-xs font-medium text-white/80">
                         {t}
                       </span>
                     ))}
@@ -160,41 +133,7 @@ export default function GiantResumeSection() {
         <div className="pointer-events-none absolute inset-x-0 -top-3 mx-auto h-6 w-6 rounded-full bg-white/80 shadow-sm ring-1 ring-neutral-200 dark:bg-neutral-900/80 dark:ring-neutral-800" />
       </div>
 
-      {/* PROJECTS (directly under Experience) */}
-      <div>
-        <h3 id="projects" className="mb-6 text-2xl font-semibold text-white">Projects</h3>
-        <div className="grid gap-6 md:grid-cols-2">
-          {projects.map((proj, i) => (
-            <article
-              key={i}
-              className="group rounded-2xl border border-neutral-800 bg-neutral-900/60 p-[1px] shadow-sm backdrop-blur transition-transform duration-150 hover:-translate-y-1 hover:shadow-md"
-            >
-              {/* gradient border wrapper */}
-              <div className="rounded-2xl bg-white/6 p-6 relative overflow-hidden">
-                <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/8 via-white/4 to-transparent mix-blend-overlay" />
-                <header className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h4 className="text-lg font-semibold text-white">{proj.title}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {proj.stack.map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full border border-neutral-700 bg-neutral-800/60 px-2.5 py-1 text-xs font-medium text-white/80"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </header>
-                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-white/80">
-                  {proj.highlights.map((h, idx) => (
-                    <li key={idx}>{h}</li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
+      <Projects/>
 
       {/* Footer hairline */}
       <div className="mt-14 h-px w-full bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800" />

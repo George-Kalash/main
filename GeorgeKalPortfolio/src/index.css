@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+*{
+  @apply scroll-smooth;
+}
+
 body{ 
   cursor: none !important;
   color: white;

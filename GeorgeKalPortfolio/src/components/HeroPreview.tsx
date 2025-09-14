@@ -76,6 +76,11 @@ export default function FinanceHeroPreview({
           </div>
         </div>
       </section>
+      <div className="absolute inset-x-0 bottom-10 flex justify-center mt-8">
+        <a href="#experience" className="text-[50px] text-white/70 hover:text-white/90 animate-bounce" aria-label="Scroll down to Projects section">
+          &#8964;
+        </a>
+      </div>
     </div>
   );
 }
