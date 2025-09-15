@@ -7,6 +7,7 @@ import RollingText from './components/rollingText'
 import HeroPreview from "./components/HeroPreview";
 import GiantResumeSection from './components/GiantResumeSection'
 import BgGradient from './components/BgGradient'
+import ContactForm from './components/ContactForm'
 
 // import { changeCursor } from './components/button'
 
@@ -26,7 +27,8 @@ export default function App() {
         symbols={["AAPL","MSFT","NVDA","GOOG", "SHOP","AMZN","META", "NFLX", "WMT", ]}
         resumeHref="/resume.pdf"
       />         
-      <GiantResumeSection></GiantResumeSection>
+      <GiantResumeSection/>
+      <ContactForm/>
     </div>
   )
 }

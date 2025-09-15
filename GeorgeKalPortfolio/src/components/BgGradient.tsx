@@ -10,10 +10,9 @@ export default function BgGradient() {
           backgroundSize: 'cover',
           // keep the same layered radial gradients
           background:
-            "radial-gradient(1200px 500px at 50% -10%, rgba(99,102,241,0.25), transparent)," +
-            "radial-gradient(800px 400px at 80% 20%, rgba(16,185,129,0.25), transparent)," +
-            "radial-gradient(600px 300px at 20% 30%, rgba(56,189,248,0.2), transparent)",
-          // promote to its own layer to avoid being affected by parent transforms
+            "radial-gradient(1200px 500px at 50% -10%, rgb(39 43 219 / 44%), transparent), " +
+            "radial-gradient(800px 400px at 80% 20%, rgb(16 185 129 / 46%), transparent), " +
+            "radial-gradient(600px 300px at 20% 30%, rgb(56 189 248 / 38%), transparent)",
           transform: 'translateZ(0)'
         }}
       />
