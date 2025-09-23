@@ -5,7 +5,7 @@ export default function Cursor() {
   const ring  = useRef<HTMLDivElement>(null); 
   const inBtn = useRef(false);                 
 
-  /* — 1.  inner dot — */
+  // Inner dot 
   useEffect(() => {
     if (!dot.current) return;
     const moveDot = (e: MouseEvent) =>
@@ -15,7 +15,7 @@ export default function Cursor() {
     return () => window.removeEventListener('mousemove', moveDot);
   }, []);
 
-  /* — 2.  outer ring follow‑or‑frame logic — */
+  // Outer ring follow‑or‑frame logic
   useEffect(() => {
     if (!ring.current) return;
 
@@ -23,46 +23,65 @@ export default function Cursor() {
 
     /** track pointer only when NOT over a button */
     const moveRing = (e: MouseEvent) => {
-      if (!inBtn.current) {
-        ring.current!.style.transform =
-          `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
-      }
-
       // Check what element is under the cursor
       const target = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement;
-      if (target) {
-        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
-          // For input fields, enlarge the ring
-          const ringEl = ring.current!;
-          const newSize = idleSize * 1.25;
-          ringEl.style.width = `${newSize}px`;
-          ringEl.style.height = `${newSize}px`;
-          ringEl.style.borderRadius = '9999px';
-        } else if (target.tagName === 'BUTTON') {
-          // Handle button hover
-          target.style.cursor = 'none';
-          inBtn.current = true;
+      
+      if (target && target.tagName === 'BUTTON') {
+        // Handle button hover
+        target.style.cursor = 'none';
+        inBtn.current = true;
 
-          const r = target.getBoundingClientRect();
-          const ringEl = ring.current!;
-          ringEl.style.width = `${r.width}px`;
-          ringEl.style.height = `${r.height}px`;
-          ringEl.style.borderRadius = '10px';
-          ringEl.style.transform =
-            `translate(${r.x + r.width / 2}px, ${r.y + r.height / 2}px)
-            translate(-50%, -50%)`;
-        } else if ((target.tagName === 'A' && !target.classList.contains('no-cursor-enlarge')) || target.classList.contains('cursor-enlarge')) {
-          const ringEl = ring.current!;
-          const newSize = idleSize * 1.25;
-          ringEl.style.width = `${newSize}px`;
-          ringEl.style.height = `${newSize}px`;
-          ringEl.style.borderRadius = '9999px';
-        } else {
-          // Reset to normal for other elements
-          const ringEl = ring.current!;
-          ringEl.style.width = `${idleSize}px`;
-          ringEl.style.height = `${idleSize}px`;
-          ringEl.style.borderRadius = '9999px';
+        const r = target.getBoundingClientRect();
+        const ringEl = ring.current!;
+        ringEl.style.width = `${r.width}px`;
+        ringEl.style.height = `${r.height}px`;
+        ringEl.style.borderRadius = '10px';
+        ringEl.style.transform =
+          `translate(${r.x + r.width / 2}px, ${r.y + r.height / 2}px)
+          translate(-50%, -50%)`;
+
+        // Increase dot size by 5%
+        if (dot.current) {
+          const baseSize = 8; // w-2 is 8px
+          const newSize = baseSize * 1.05;
+          dot.current.style.width = `${newSize}px`;
+          dot.current.style.height = `${newSize}px`;
+        }
+      } else {
+        // Not over a button, follow the mouse
+        inBtn.current = false;
+        ring.current!.style.transform =
+          `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
+
+        if (target) {
+          if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || ((target.tagName === 'A' && !target.classList.contains('no-cursor-enlarge')) || target.classList.contains('cursor-enlarge') )) {
+            // For input fields, enlarge the ring
+            const ringEl = ring.current!;
+            const newSize = idleSize * 1.25;
+            ringEl.style.width = `${newSize}px`;
+            ringEl.style.height = `${newSize}px`;
+            ringEl.style.borderRadius = '9999px';
+
+            // Increase dot size by 5%
+            if (dot.current) {
+              const baseSize = 8;
+              const newSize = baseSize * 1.1;
+              dot.current.style.width = `${newSize}px`;
+              dot.current.style.height = `${newSize}px`;
+            }
+          } else {
+            // Reset to normal for other elements
+            const ringEl = ring.current!;
+            ringEl.style.width = `${idleSize}px`;
+            ringEl.style.height = `${idleSize}px`;
+            ringEl.style.borderRadius = '9999px';
+
+            // Reset dot size to normal
+            if (dot.current) {
+              dot.current.style.width = '8px';
+              dot.current.style.height = '8px';
+            }
+          }
         }
       }
     };

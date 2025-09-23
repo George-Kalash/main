@@ -13,7 +13,7 @@ function CompanyDataBox({ symbol, price, percent }) {
     p == null || !Number.isFinite(p) ? "--" : `${p >= 0 ? "+" : ""}${p.toFixed(2)}%`;
   return (
     <a href={`https://finance.yahoo.com/quote/${symbol}`} target="_blank" rel="noreferrer" className="no-underline cursor-none">
-    <div className={`cursor-enlarge relative rounded-xl p-3 md:p-4 backdrop-blur-lg transition-all duration-300 ${isLoading ? 'bg-black/30 backdrop-blur-sm'  : 'bg-black/60 backdrop-blur-[90px] border border-white/10 hover:scale-105' }`}>
+    <div className={`cursor-enlarge relative rounded-xl p-3 md:p-4 backdrop-blur-lg transition-all duration-300 ${isLoading ? 'bg-black/30 backdrop-blur-sm'  : 'bg-black/60 backdrop-blur-[90px] border border-white/10 hover:scale-102' }`}>
       <div className="cursor-enlarge items-center justify-between mb-1">
         <div className="cursor-enlarge font-bold text-sm md:text-base text-white truncate">{symbol}</div>
       </div>
