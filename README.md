@@ -12,7 +12,6 @@ This is a collection of my side projects I have worked on and/or completed since
 
   ## Projects Currently in development
   * **DegreeFlow** - WIP project developed to assist university students in tracking their study progress.
-  * **NBA** – an improved version of the NBA-predict. Goal: acheive an accuracy of over 84%.
   * **Internation Tennis** – Machine learning project focucing on predicting tennis matches. Goal: acheive an accuracy of over 85%.
   * **UI landing** – Will be used to show every project in an interactive format.
     
