@@ -1,12 +1,20 @@
-# NBA prediction model
+# NBA Game Outcome Prediction Model
 
-## This model utilizes heavily pandas and the sklearn libraries for python.
+This project uses Python, with heavy reliance on the `pandas` and `scikit-learn` libraries, to predict NBA game outcomes from the home team's perspective. The dataset includes approximately 28,000 NBA games.
 
-As of June 18th 2025 the top accuracy recodred was 82%, ROC > 0.9
-The dataset contains around 28,000 games, all from the home team's prespective.
+## Model Performance
 
-## Potention improvement considerations: 
-1) Implement XG-Boost to entencify the capabilities of the model. 
-2) Include more parameters and key identifiers into the dataset.
-3) Work on refining the data for weed out bad agents.
+- **Train/test split:** 85% of the data is used for training, and 15% for testing.
+- **Best recorded accuracy:** 82%
+- **ROC (Receiver Operating Characteristic) AUC:** > 0.9
 
+Performance metrics are based on the June 18th, 2025 benchmark.
+
+## Potential Improvements
+
+1. Implement XGBoost to enhance the model's capabilities.
+2. Incorporate additional relevant features and key identifiers into the dataset.
+3. Improve data cleaning processes to remove outliers and bad data.
+
+---
+Feel free to contribute or open issues for suggestions and bugs!
