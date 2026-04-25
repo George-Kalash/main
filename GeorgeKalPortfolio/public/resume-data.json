@@ -1,0 +1,55 @@
+{
+  "badge": "Resume Highlights",
+  "title": "Experience",
+  "accentTitle": " & Projects",
+  "description": "A quick tour through where I’ve worked — followed by what I’ve built.",
+  "experiences": [
+    {
+      "role": "Business Analyst Intern",
+      "company": "Manulife",
+      "location": "Toronto, ON",
+      "period": "May 2026 – Aug 2026",
+      "logoSrc": "/logos/manulife.png",
+      "logoAlt": "Manulife logo",
+      "points": [
+        "Developed and maintained architecture documentation supporting enterprise initiatives.",
+        "Created solution diagrams and system models (Visio, Lucidchart) to communicate design decisions.",
+        "Researched cloud, data, and integration technologies; delivered concise technical briefs to stakeholders.",
+        "Supported architecture reviews by validating artifacts and aligning with governance standards."
+      ],
+      "tags": ["Business Analysis", "Documentation", "Software", "Data"]
+    },
+    {
+      "role": "Math Instructor",
+      "company": "Mathnasium",
+      "location": "Kitchener, ON",
+      "period": "Aug 2024 – Present",
+      "logoSrc": "/logos/mathnasium.png",
+      "logoAlt": "Mathnasium logo",
+      "points": [
+        "Led group and 1:1 lessons in a fast-paced environment.",
+        "Tracked and analyzed student performance to adapt instruction.",
+        "Collaborated in a team-teaching environment to meet diverse needs.",
+        "Engaged students up to Senior Calculus & Geometry.",
+        "Delivered personalized instruction with the Mathnasium Method."
+      ],
+      "tags": ["Education", "Pedagogy", "Assessment"]
+    },
+    {
+      "role": "Software Developer Intern",
+      "company": "Otomakeit Solutions",
+      "location": "Halifax, ON",
+      "period": "Sep 2024 – Dec 2024",
+      "logoSrc": "",
+      "logoAlt": "Otomakeit Solutions logo",
+      "points": [
+        "Built a C# Windows app to streamline internal file management with lightweight automation.",
+        "Contributed to code reviews; improved code quality metrics.",
+        "Fixed critical bugs using Visual Studio debugger; wrote technical docs and user guides.",
+        "Added GitHub OAuth to fetch/visualize usage data and identify high-frequency actions.",
+        "Explored AI-powered text classification for better tagging and search."
+      ],
+      "tags": ["C#", "Windows", "GitHub OAuth", "Docs", "Debugging"]
+    }
+  ]
+}
