@@ -148,7 +148,7 @@ export default function GiantResumeSection() {
           {resumeContent.experiences.map((exp, i) => (
             <li key={i} className="mb-12 ml-6 relative">
               {/* Timeline node */}
-              <span className="absolute -left-11 top-3">
+              <span className="absolute -left-11 top-3 ml-[-3.2px]">
                 <span className="relative inline-flex h-11 w-11 items-center justify-center">
                   {/* Indigo pulse behind the glass */}
 
@@ -157,7 +157,7 @@ export default function GiantResumeSection() {
                   <span className="absolute inset-0 rounded-full bg-gradient-to-br from-white/8 via-black/4 to-transparent pointer-events-none backdrop-blur-md" />
 
                   {/* Glass core */}
-                  <span className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/8 bg-white/6 ring-1 ring-indigo-400/20 backdrop-blur-sm shadow-inner">
+                  <span className="relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/8 bg-white/6 ring-1 ring-gray-200/40 backdrop-blur-sm shadow-inner">
                     {/* glossy highlight */}
                     <span className="absolute -top-1 left-1 h-2 w-3 rounded-full bg-white/30 blur-sm opacity-90" />
                     {/* company logo or fallback dot */}
