@@ -25,6 +25,7 @@ export default function FinanceHeroPreview({
 
   return (
     <div
+      id="about"
       className="min-h-screen text-white grid content-around"
       // keep cursor unset so your custom cursor isn’t overridden
       
@@ -60,7 +61,7 @@ export default function FinanceHeroPreview({
                 <LetterReveal text={`George ${titleName.replace(/^George\s+/i, "")}`} className="text-white" charClass="inline-block" maxDelay={700} duration={300} />
               </div>
             </h1>
-            <p className="mt-4 text-white/80 max-w-2xl"><LetterReveal text={"University of Waterloo student with a strong passion for finance, global markets, and data-driven decision-making. I build reliable tools and practical projects with a strong emphasis on performance, clarity, and accessibility."} className="text-white/80" charClass="inline-block" maxDelay={700} duration={300} /></p>
+            <p className="mt-4 text-white/80 max-w-2xl"><LetterReveal text={"University of Waterloo BMath student specializing in Mathematical Finance, with experience across global hedging, solutions architecture, software development, and data analytics. I build reliable tools and practical projects with a strong emphasis on performance, clarity, and accessibility."} className="text-white/80" charClass="inline-block" maxDelay={700} duration={300} /></p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="#projects" className="px-5 py-3 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg hover:bg-white/20 cursor-none">
                 View Projects
@@ -77,12 +78,10 @@ export default function FinanceHeroPreview({
         </div>
       </section>
       <div className="inset-x-0 bottom-[1%] flex justify-center mt-8">
-        <a href="#experience" className="text-[50px] text-white/70 hover:text-white/90 animate-bounce cursor-none" aria-label="Scroll down to Projects section">
+        <a href="#resume" className="text-[50px] text-white/70 hover:text-white/90 animate-bounce cursor-none" aria-label="Scroll down to resume highlights">
           &#8964;
         </a>
       </div>
     </div>
   );
 }
-
-

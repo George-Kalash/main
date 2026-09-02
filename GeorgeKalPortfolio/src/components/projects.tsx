@@ -3,6 +3,24 @@ import React from "react";
 export default function GiantResumeSection() {
   const projects = [
     {
+      title: "FOMC Rates Predictor",
+      stack: ["Financial Analytics", "Excel", "Random Forest"],
+      complete: true,
+      highlights: [
+        "Built a random forest model to predict the Fed Funds Rate using data from 1994–2026 with an 80/20 train-test split.",
+        "Achieved 92.7% accuracy and an F1 score of 0.919.",
+      ],
+    },
+    {
+      title: "Vision — Financial Statement Analyzer",
+      stack: ["Python", "pandas", "yfinance", "EdgarTools", "SQL"],
+      complete: true,
+      highlights: [
+        "Developed a financial analysis tool that extracts, filters, and structures public-company financials from SEC filings.",
+        "Created a repeatable workflow for collecting SEC EDGAR data and market information for analysis.",
+      ],
+    },
+    {
       title: "Investment Project",
       stack: ["Financial Analytics", "Excel"],
       complete: true,
@@ -17,9 +35,9 @@ export default function GiantResumeSection() {
       stack: ["Python", "pandas", "scikit-learn"],
       complete: true,
       highlights: [
-        "Trained on outcomes from 2002 → latest season (~28,000 games).",
-        "Peak accuracy ≈ 82% with ROC > 0.9.",
-        "Utilized Python programming language and libraries including, but not limited, to sklearn and pandas.",
+        "Built a machine-learning model to predict NBA game outcomes using historical game data from 2002 through recent seasons.",
+        "Trained and evaluated models on 28,000+ games, reaching a highest recorded accuracy of 82% and ROC-AUC of 0.90.",
+        "Used Python, pandas, scikit-learn, and data modeling throughout the prediction workflow.",
       ],
     },
     {

@@ -18,67 +18,94 @@ type Experience = {
   logoAlt?: string;
 };
 
+type Education = {
+  school: string;
+  degree: string;
+  location: string;
+  period: string;
+  details: string;
+};
+
+type SkillGroup = {
+  category: string;
+  items: string[];
+};
+
 type ResumeSectionContent = {
   badge: string;
   title: string;
   accentTitle: string;
   description: string;
+  education: Education[];
   experiences: Experience[];
+  skills: SkillGroup[];
 };
 
 const fallbackResumeContent: ResumeSectionContent = {
   badge: "Resume Highlights",
-  title: "Experience",
-  accentTitle: " & Projects",
-  description: "A quick tour through where I’ve worked — followed by what I’ve built.",
+  title: "Resume",
+  accentTitle: " Highlights",
+  description: "My education, experience, selected projects, and analytical toolkit.",
+  education: [
+    {
+      school: "University of Waterloo",
+      degree: "BMath, Mathematical Finance",
+      location: "Waterloo, ON",
+      period: "Expected 2028",
+      details: "Relevant coursework: macroeconomics, microeconomics, OOP and design patterns, financial mathematics, calculus, and linear algebra I/II.",
+    },
+  ],
   experiences: [
     {
-      role: "Business Analyst Intern",
+      role: "Global Hedging ALM, Actuarial Intern (Incoming)",
+      company: "Manulife",
+      location: "Toronto, ON",
+      period: "Sep 2026 – Dec 2026",
+      logoSrc: "/logos/manulife.png",
+      logoAlt: "Manulife logo",
+      points: [
+        "Selected to support Manulife’s global hedging programs for variable annuity and index-linked products across equity, interest-rate, currency, and fixed-income risk factors.",
+        "Will perform daily exposure mapping and produce aggregate risk reports identifying key portfolio risk drivers and informing internal hedging decisions.",
+        "Will analyze Bloomberg and Reuters market data and maintain fund and security classifications through corporate actions and market changes, strengthening downstream exposure reporting accuracy.",
+      ],
+      tags: ["ALM", "Global Hedging", "Risk Reporting", "Bloomberg", "Reuters"],
+    },
+    {
+      role: "Business Technology Analyst Intern, Solutions Architecture",
       company: "Manulife",
       location: "Toronto, ON",
       period: "May 2026 – Aug 2026",
       logoSrc: "/logos/manulife.png",
       logoAlt: "Manulife logo",
       points: [
-        "Developed and maintained architecture documentation supporting enterprise initiatives.",
-        "Created solution diagrams and system models (Visio, Lucidchart) to communicate design decisions.",
-        "Researched cloud, data, and integration technologies; delivered concise technical briefs to stakeholders.",
-        "Supported architecture reviews by validating artifacts and aligning with governance standards.",
+        "Analyzed business processes, system dependencies, technical risks, and implementation constraints to support enterprise technology initiatives.",
+        "Worked with senior architects and engineers to design an AI-enabled regulatory report filing solution projected to improve processing efficiency by up to 80%.",
+        "Partnered with business stakeholders, architecture, and delivery teams to clarify requirements, document decisions, track dependencies, and support solution planning.",
+        "Created process flows, implementation notes, technical summaries, and architecture documentation using Python, Lucidchart, Confluence, Generative AI, and Rovo AI.",
       ],
-      tags: ["Business Analysis", "Documentation", "Software", "Data"],
-    },
-    {
-      role: "Math Instructor",
-      company: "Mathnasium",
-      location: "Kitchener, ON",
-      period: "Aug 2024 – Present",
-      logoSrc: "",
-      logoAlt: "Mathnasium logo",
-      points: [
-        "Led group and 1:1 lessons in a fast-paced environment.",
-        "Tracked and analyzed student performance to adapt instruction.",
-        "Collaborated in a team-teaching environment to meet diverse needs.",
-        "Engaged students up to Senior Calculus & Geometry.",
-        "Delivered personalized instruction with the Mathnasium Method.",
-      ],
-      tags: ["Education", "Pedagogy", "Assessment"],
+      tags: ["Solutions Architecture", "Python", "Lucidchart", "Confluence", "Generative AI"],
     },
     {
       role: "Software Developer Intern",
       company: "Otomakeit Solutions",
-      location: "Halifax, ON",
+      location: "Remote",
       period: "Sep 2024 – Dec 2024",
       logoSrc: "",
       logoAlt: "Otomakeit Solutions logo",
       points: [
-        "Built a C# Windows app to streamline internal file management with lightweight automation.",
-        "Contributed to code reviews; improved code quality metrics.",
-        "Fixed critical bugs using Visual Studio debugger; wrote technical docs and user guides.",
-        "Added GitHub OAuth to fetch/visualize usage data and identify high-frequency actions.",
-        "Explored AI-powered text classification for better tagging and search.",
+        "Developed and maintained Python-based automation tools to streamline repetitive internal workflows and improve operational efficiency.",
+        "Debugged, tested, and refactored existing Python code to improve reliability, readability, and maintainability across application components.",
+        "Integrated external APIs to retrieve and process structured data, handling authentication, request logic, error cases, and data formatting for downstream use.",
       ],
-      tags: ["C#", "Windows", "GitHub OAuth", "Docs", "Debugging"],
+      tags: ["Python", "Automation", "APIs", "Testing", "Data Processing"],
     },
+  ],
+  skills: [
+    { category: "Data Analysis", items: ["SQL", "Python", "pandas", "Excel", "Data Cleaning", "Data Manipulation", "Exploratory Analysis", "Segmentation", "Regression", "Cohort Analysis", "Funnel Analysis"] },
+    { category: "Visualization & Reporting", items: ["Excel Dashboards", "PowerPoint", "Reporting Templates", "Business Performance Summaries", "Stakeholder Insights", "KPI Tracking"] },
+    { category: "Analytics Engineering", items: ["Structured Datasets", "API Data Retrieval", "Automated Workflows", "Data Quality Checks", "Reproducible Analysis", "Documentation", "Operational Data"] },
+    { category: "Professional", items: ["Ownership", "Curiosity", "Ambiguity Management", "Stakeholder Communication", "Independent Execution", "Mentorship", "Problem Solving", "Fast Learning"] },
+    { category: "Certifications", items: ["Bloomberg Market Concepts (BMC)", "Investment Evaluation"] },
   ],
 };
 
@@ -123,9 +150,9 @@ export default function GiantResumeSection() {
 
   return (
     <section
-      id="experience"
+      id="resume"
       className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20"
-      aria-label="Experience and Projects"
+      aria-label="Resume highlights"
     >
 
       {/* Header */}
@@ -142,8 +169,34 @@ export default function GiantResumeSection() {
         </p>
       </header>
 
+      {/* EDUCATION */}
+      <div className="mb-16">
+        <h3 className="mb-6 text-2xl font-semibold text-white">Education</h3>
+        <div className="grid gap-6">
+          {resumeContent.education.map((item) => (
+            <article
+              key={`${item.school}-${item.degree}`}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-black/6 p-6 shadow-lg ring-1 ring-indigo-400/8 backdrop-blur-md transition-transform duration-150 hover:-translate-y-1 hover:shadow-2xl"
+            >
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/8 via-white/4 to-transparent mix-blend-overlay" />
+              <div className="relative flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h4 className="text-lg font-semibold text-white">{item.school}</h4>
+                  <p className="mt-1 text-green-400">{item.degree}</p>
+                </div>
+                <p className="text-sm text-white/70 sm:text-right">
+                  {item.location}<br />{item.period}
+                </p>
+              </div>
+              <p className="relative mt-4 text-sm leading-relaxed text-white/80">{item.details}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+
       {/* EXPERIENCE (timeline) */}
-      <div className="relative mb-16">
+      <div id="experience" className="relative mb-16 scroll-mt-28">
+        <h3 className="mb-6 text-2xl font-semibold text-white">Experience</h3>
         <ol className="relative border-l-2 border-neutral-700">
           {resumeContent.experiences.map((exp, i) => (
             <li key={i} className="mb-12 ml-6 relative">
@@ -216,6 +269,32 @@ export default function GiantResumeSection() {
       </div>
 
       <Projects/>
+
+      {/* SKILLS */}
+      <div id="skills" className="mt-16 scroll-mt-28">
+        <h3 className="mb-6 text-2xl font-semibold text-white">Skills & Certifications</h3>
+        <div className="grid gap-6 md:grid-cols-2">
+          {resumeContent.skills.map((group) => (
+            <article
+              key={group.category}
+              className="relative overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/60 p-6 shadow-sm backdrop-blur"
+            >
+              <span className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/8 via-white/4 to-transparent mix-blend-overlay" />
+              <h4 className="relative text-base font-semibold text-green-400">{group.category}</h4>
+              <div className="relative mt-4 flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-neutral-700 bg-neutral-800/60 px-3 py-1 text-xs font-medium text-white/80"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
 
       {/* Footer hairline */}
       <div className="mt-14 h-px w-full bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800" />
